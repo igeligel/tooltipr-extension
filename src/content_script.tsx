@@ -1,8 +1,5 @@
 import ReactDOM from "react-dom";
-import { findAndReplace } from "dom-find-and-replace";
 import PopoverApp from "./PopoverApp";
-import { Aracari } from "aracari";
-import findAndReplaceDOMText from "findAndReplaceDOMText";
 // document.onreadystatechange = function () {
 //   if (document.readyState === 'interactive') {
 //     // ;
