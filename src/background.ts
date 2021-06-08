@@ -2,10 +2,6 @@ console.log('Initialized');
 
 const doStuffWithDom =(domContent: string) => {
   console.log('I received the following DOM content:\n' + domContent);
-  // firstHeading
-  // debugger
-  // const document.getElementById("firstHeading")
-  // ReactDOM.render(stuff, );
 }
 
 chrome.browserAction.onClicked.addListener(function (tab) {
