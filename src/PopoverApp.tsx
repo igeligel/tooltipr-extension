@@ -1,6 +1,5 @@
-import * as React from "react";
-import { ChakraProvider, theme } from "@chakra-ui/react";
-import { PopoverElement } from "./PopoverElement";
+import React from "react";
+import { AlternativePopoverElement } from "./AlternativePopoverElement";
 
 // delete theme.styles.global;
 
@@ -15,12 +14,13 @@ import { PopoverElement } from "./PopoverElement";
 
 const RealPopoverApp = () => {
   return (
-    // theme={customTheme}
-    <ChakraProvider cssVarsRoot="body" resetCSS={false} theme={theme}>
-      <PopoverElement title="GAAP" description="is cool" tags={["test"]}>
-        GAAP
-      </PopoverElement>
-    </ChakraProvider>
+    <AlternativePopoverElement
+      title="GAAP"
+      description="is cool"
+      tags={["test"]}
+    >
+      GAAP
+    </AlternativePopoverElement>
   );
 };
 
