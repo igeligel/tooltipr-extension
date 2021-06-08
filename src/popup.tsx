@@ -16,21 +16,39 @@ const Popup = () => {
   }, []);
 
   const changeBackground = () => {
-    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-      const tab = tabs[0];
-      if (tab.id) {
-        chrome.tabs.sendMessage(
-          tab.id,
-          {
-            color: "#555555",
-          },
-          (msg) => {
-            console.log("result message:", msg);
-          }
-        );
-      }
-    });
+    // chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+    //   const tab = tabs[0];
+    //   if (tab.id) {
+    //     chrome.tabs.sendMessage(
+    //       tab.id,
+    //       {
+    //         color: "#555555",
+    //       },
+    //       (msg) => {
+    //         console.log("result message:", msg);
+    //       }
+    //     );
+    //   }
+    // });
+    // chrome.tabs.query(
+    //   { active: true, windowId: chrome.windows.WINDOW_ID_CURRENT },
+    //   (tabs) => {
+    //     const activeTab = tabs[0]
+    //     const url = activeTab.url
+    //     if (!url) return
+    //     const { id: tabId } = activeTab;
+    //     let code = `document.querySelector('h2')`;
+    //     if (!tabId) return
+    //     // http://infoheap.com/chrome-extension-tutorial-access-dom/
+    //     chrome.tabs.executeScript(tabId, { code }, function (result) {
+    //       debugger
+    //       // result has the return value from `code`
+    //     });
+    //   }
+    // );
   };
+
+  
 
   return (
     <>
