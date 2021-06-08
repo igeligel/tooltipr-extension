@@ -12,17 +12,17 @@ import { AlternativePopoverElement } from "./AlternativePopoverElement";
 //   },
 // };
 
-const RealPopoverApp = () => {
+const RealPopoverApp = (props) => {
   return (
     <AlternativePopoverElement
-      title="GAAP"
-      description="is cool"
-      tags={["test"]}
+      title={props.title}
+      description={props.description}
+      tags={props.tags}
     >
-      GAAP
+      {props.replacementText}
     </AlternativePopoverElement>
   );
 };
 
-const stuff = <RealPopoverApp />;
+const stuff = (props) => <RealPopoverApp {...props} />;
 export default stuff;

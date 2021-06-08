@@ -18,6 +18,16 @@ const uuidv4 = () => {
   );
 };
 
+const dictionary = {
+  "5984e2f2-a800-4567-8cd8-a643bcf5fdef": {
+    replacer: 'GAAP',
+    title: "Knowledge Management Hub",
+    description:
+      "is the main control center of tooltipr to manage user accounts and company-internal keyword directories",
+    tags: ["tooltipr", "product"],
+  },
+};
+
 chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
   console.log("test test");
   const allIds: Array<any> = [];
@@ -25,6 +35,12 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
   // If the received message has the expected format...
   if (msg.text === "report_back") {
     setTimeout(() => {
+      // Object.entries(dictionary).forEach(([key, value]) => {
+      //   value.replacer
+
+      // })
+
+
       const nodes = document.createTreeWalker(
         document.body,
         NodeFilter.SHOW_TEXT
@@ -78,31 +94,19 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
         }
       }
 
-      // const orig = document.body.innerHTML;
-
-      // // @ts-ignore
-      // const changed = findAndReplace(document.body.innerHTML, {
-      //   find: "GAAP",
-      //   replace: (offsetText, foundText) => {
-      //     debugger;
-      //     const uuid = uuidv4();
-      //     const bold = document.createElement("span");
-      //     bold.textContent = offsetText;
-      //     bold.id = uuid;
-      //     bold.style.display = "inline-block";
-      //     bold.className = "tooltipr-component-root";
-      //     allIds.push(uuid);
-      //     return bold;
-      //   },
-      // })
-      // debugger
-      // // @ts-ignore
-      // document.body.innerHTML = changed
-
       allIds.forEach((uuid) => {
         const selector = document.getElementById(uuid);
         if (!selector) return;
-        ReactDOM.render(PopoverApp, selector);
+        ReactDOM.render(
+          PopoverApp({
+            title: "Knowledge Management Hub",
+            description:
+              "is the main control center of tooltipr to manage user accounts and company-internal keyword directories",
+            tags: ["tooltipr", "product"],
+            replacementText: "GAAP",
+          }),
+          selector
+        );
       });
     }, 2000);
   }
