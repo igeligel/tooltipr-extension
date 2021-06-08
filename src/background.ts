@@ -1,6 +1,3 @@
-import ReactDOM from "react-dom";
-import stuff from "./renderElement";
-
 console.log('Initialized');
 
 const doStuffWithDom =(domContent: string) => {

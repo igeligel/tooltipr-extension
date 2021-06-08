@@ -41,14 +41,13 @@ const Popup = () => {
     //     if (!tabId) return
     //     // http://infoheap.com/chrome-extension-tutorial-access-dom/
     //     chrome.tabs.executeScript(tabId, { code }, function (result) {
-    //       debugger
     //       // result has the return value from `code`
     //     });
     //   }
     // );
   };
 
-  
+
 
   return (
     <>

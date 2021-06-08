@@ -1,14 +1,11 @@
-import React, { ReactNode, useEffect, useState } from "react";
+import React, { ReactNode, useState } from "react";
 import styled from "@emotion/styled";
 import { Popover } from "react-tiny-popover";
 import { useDebounce } from "react-use";
 import { keyframes } from "@emotion/react";
 import { HStack } from "./HStack";
 import { FiCheck, FiSettings } from "react-icons/fi";
-import { Logo } from "./Logo";
 import { LogoContainer } from "./LogoContainer";
-// backgroundColor={'cyan.50'}
-//           style={{ cursor: 'pointer' }}
 
 const Span = styled.span`
   display: inline-block;
@@ -44,6 +41,7 @@ const PopoverHeading = styled.h2`
   text-align: left:
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
+  border: none;
 `;
 
 type PopoverParagraphProps = {
@@ -121,6 +119,7 @@ const SettingsBar = styled.div`
 
 const SettingsMenuButton = styled.button`
   margin: 0;
+  padding: 0;
   box-sizing: border-box;
   padding: 4px;
   box-shadow: none;
@@ -132,6 +131,10 @@ const SettingsMenuButton = styled.button`
   border-radius: 6px;
   border: 1px solid transparent;
   color: hsl(214deg 32% 91%);
+  background: transparent;
+  max-height: 32px;
+  max-width: 32px;
+  cursor: pointer;
 
   :active {
     background: hsl(189deg 82% 87%);
@@ -203,7 +206,7 @@ export const AlternativePopoverElement: React.FC<PopoverElementProps> = (
         }}
         isOpen={isPopoverActive || isPopoverHovered}
         positions={["top", "bottom", "left", "right"]} // preferred positions by priority
-        reposition={true}
+        reposition={false}
         content={
           <PopoverContainer
             onMouseEnter={() => {

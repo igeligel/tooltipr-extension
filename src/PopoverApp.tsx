@@ -1,17 +1,6 @@
 import React from "react";
 import { AlternativePopoverElement } from "./AlternativePopoverElement";
 
-// delete theme.styles.global;
-
-// const customTheme = {
-//   ...theme,
-//   styles: {
-//     global: {
-//       ".tooltipr-component-root": oldGlobal,
-//     },
-//   },
-// };
-
 const RealPopoverApp = (props) => {
   return (
     <AlternativePopoverElement
