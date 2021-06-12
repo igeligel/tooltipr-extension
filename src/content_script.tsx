@@ -26,7 +26,7 @@ const dictionary: Dictionary = {
     replacer: "GAAP",
     title: "Generally Accepted Accounting Principles",
     description:
-      "is the main control center of tooltipr to manage user accounts and company-internal keyword directories",
+      "is the accounting standard adopted by the U.S. Securities and Exchange Commission (SEC).",
     tags: ["tooltipr", "product"],
   },
   "d41ae5de-3d47-4669-93b3-a10e771dde10": {
@@ -35,6 +35,12 @@ const dictionary: Dictionary = {
     description: `is really great because of Julius`,
     tags: ["tooltipr", "fintech"],
   },
+  "3884dca8-09b9-478b-a2a5-21d4ac77aa5f": {
+    replacer: "Gen Z",
+    title: "Generation Z",
+    description: `is a really nice generation`,
+    tags: ["tooltipr", "fintech"],
+  }
 };
 
 const flatDictionary = Object.entries(dictionary);

@@ -17,9 +17,12 @@
     "url": "https://github.com/chibat/chrome-extension-typescript-starter.git"
   },
   "dependencies": {
-    "@emotion/react": "^11.4.0",
-    "@emotion/styled": "^11.3.0",
+    "@chakra-ui/icons": "^1.0.13",
+    "@chakra-ui/react": "^1.6.3",
+    "@emotion/react": "11",
+    "@emotion/styled": "11",
     "@popperjs/core": "^2.9.2",
+    "axios": "^0.21.1",
     "dom-find-and-replace": "^1.4.3",
     "findandreplacedomtext": "^0.4.6",
     "framer-motion": "4",
