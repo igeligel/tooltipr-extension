@@ -1,0 +1,11 @@
+diff --git a/node_modules/out-of-character/types/index.d.ts b/node_modules/out-of-character/types/index.d.ts
+index c9f9573..584da0b 100644
+--- a/node_modules/out-of-character/types/index.d.ts
++++ b/node_modules/out-of-character/types/index.d.ts
+@@ -1,5 +1,5 @@
+ /** find there invisible characters in this text? */
+-export function detect(input: string): []object
++export function detect(input: string): object[]
+ 
+ /** remove invisible characters from the text */
+ export function replace(input: string): string

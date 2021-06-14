@@ -8,7 +8,8 @@
     "build": "webpack --config webpack/webpack.prod.js",
     "clean": "rimraf dist",
     "test": "npx jest",
-    "style": "prettier --write \"src/**/*.{ts,tsx}\""
+    "style": "prettier --write \"src/**/*.{ts,tsx}\"",
+    "postinstall": "patch-package"
   },
   "author": "",
   "license": "MIT",
@@ -26,6 +27,8 @@
     "dom-find-and-replace": "^1.4.3",
     "findandreplacedomtext": "^0.4.6",
     "framer-motion": "4",
+    "html-escaper": "^3.0.3",
+    "out-of-character": "^1.2.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-icons": "^4.2.0",
@@ -35,6 +38,7 @@
   },
   "devDependencies": {
     "@types/chrome": "0.0.143",
+    "@types/html-escaper": "^3.0.0",
     "@types/jest": "^25.1.4",
     "@types/jquery": "^3.3.33",
     "@types/react": "^17.0.0",
@@ -42,6 +46,7 @@
     "copy-webpack-plugin": "^6.1.0",
     "glob": "^7.1.6",
     "jest": "^26.6.3",
+    "patch-package": "^6.4.7",
     "prettier": "^2.2.1",
     "rimraf": "^3.0.2 ",
     "ts-jest": "^25.2.1 ",

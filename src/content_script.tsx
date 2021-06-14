@@ -1,4 +1,6 @@
 import ReactDOM from "react-dom";
+import {escape, unescape} from 'html-escaper';
+import outOfCharacter from 'out-of-character'
 import PopoverApp from "./PopoverApp";
 // document.onreadystatechange = function () {
 //   if (document.readyState === 'interactive') {
@@ -40,6 +42,18 @@ const dictionary: Dictionary = {
     title: "Generation Z",
     description: `is a really nice generation`,
     tags: ["tooltipr", "fintech"],
+  },
+  "8b7a0311-2ac7-43fd-b3fa-a6657f6f6078": {
+    replacer: "Beekeeper Studio",
+    title: "Beekeeper Studio",
+    description: `is a cross-platform SQL editor and database manager available for Linux, Mac, and Windows.`,
+    tags: ["tooltipr", "onboarding", "tech"]
+  },
+  "476f12af-e9e5-48f7-af3d-e693e81db74f": {
+    replacer: "VS Code",
+    title: "Visual Studio Code",
+    description: "is a source-code editor made by Microsoft for Windows, Linux and macOS. Features include support for debugging, syntax highlighting, intelligent code completion, snippets, code refactoring, and embedded Git.",
+    tags: ["tooltipr", "onboarding", "tech"]
   }
 };
 
@@ -74,14 +88,18 @@ const replaceText = (): Array<DataIdDictionaryMapping> => {
   }
 
   const allGaapNodes = allDomNodes.filter((e) => {
+    const unescapedContent = outOfCharacter.replace(unescape(e.textContent))
+
     return flatDictionary.some(([key, value]) => {
-      return e.textContent.includes(value.replacer);
+      return unescapedContent.includes(value.replacer);
     })
   });
 
   allGaapNodes.forEach((node) => {
+    const unescapedContent = outOfCharacter.replace(unescape(node.textContent))
+
     const flatDictionaryItem = flatDictionary.find(([key, value]) => {
-      return node.textContent.includes(value.replacer)
+      return unescapedContent.includes(value.replacer)
     })
 
     const [flatDictionaryItemKey, flatDictionaryItemValue] = flatDictionaryItem
@@ -91,7 +109,7 @@ const replaceText = (): Array<DataIdDictionaryMapping> => {
       return;
     }
 
-    if (node.textContent === flatDictionaryItemValue.replacer) {
+    if (unescapedContent === flatDictionaryItemValue.replacer) {
       const { newElement, uuid } = spanGenerator(flatDictionaryItemValue.replacer);
       allIds.push({ dataId: uuid, dictionaryId: flatDictionaryItemKey })
       // @ts-ignore
@@ -99,7 +117,7 @@ const replaceText = (): Array<DataIdDictionaryMapping> => {
       return;
     }
 
-    const matches = node.textContent.split(flatDictionaryItemValue.replacer);
+    const matches = unescapedContent.split(flatDictionaryItemValue.replacer);
     const countOfMatches = matches.length;
     let newChildren = [];
     matches.forEach((match, index) => {
@@ -126,13 +144,14 @@ const replaceText = (): Array<DataIdDictionaryMapping> => {
 };
 
 chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
-  console.log("test test");
   let allIds: Array<DataIdDictionaryMapping> = [];
 
   // If the received message has the expected format...
   if (msg.text === "report_back") {
     setTimeout(() => {
       allIds = replaceText();
+
+      console.log({allIds})
 
       allIds.forEach((idPair) => {
         const selector = document.querySelector(
