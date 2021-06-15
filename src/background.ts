@@ -4,20 +4,23 @@ const doStuffWithDom = (domContent: string) => {
   console.log("I received the following DOM content:\n" + domContent);
 };
 
-chrome.browserAction.onClicked.addListener(function (tab) {
-  if (!tab?.id) {
-    console.log("No tab found");
-    return;
-  }
-  // ...check the URL of the active tab against our pattern and...
-  // ...if it matches, send a message specifying a callback too
-  chrome.tabs.sendMessage(tab.id, { text: "report_back" }, doStuffWithDom);
-});
-
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
+  console.log('Listening to idle callback')
+  // @ts-ignore
+  // window.requestIdleCallback(() => testFunction(tabId, changeInfo), { timeout: 10000 })
   if (changeInfo.status == "complete" && tab.active) {
+    console.log("Idle State!")
+
     chrome.tabs.sendMessage(tabId, { text: "report_back" }, doStuffWithDom);
   }
+
+
+  // if (changeInfo.status == "complete" && tab.active) {
+  //   console.log("Page loaded!")
+
+  //   debugger
+  //   chrome.tabs.sendMessage(tabId, { text: "report_back", requestIdleCallback }, doStuffWithDom);
+  // }
 });
 
 let userLoggedIn = false;
@@ -49,7 +52,7 @@ chrome.cookies.onChanged.addListener((changeInfo) => {
     data = data.filter(oldCookie => oldCookie.name !== cookie.name)
     data.push(cookie)
   }
-   console.log({changeInfo})
+  //  console.log({changeInfo})
   // const cookie = changeInfo.cookie;
   // if (cookie.name === COOKIE_NAME && cookie.domain === `.${DOMAIN_NAME}`) {
   //   updatePopup(!changeInfo.removed);

@@ -1,7 +1,8 @@
 import ReactDOM from "react-dom";
-import {escape, unescape} from 'html-escaper';
-import outOfCharacter from 'out-of-character'
+import { escape, unescape } from "html-escaper";
+import outOfCharacter from "out-of-character";
 import PopoverApp from "./PopoverApp";
+import _ from "lodash";
 // document.onreadystatechange = function () {
 //   if (document.readyState === 'interactive') {
 //     // ;
@@ -47,14 +48,15 @@ const dictionary: Dictionary = {
     replacer: "Beekeeper Studio",
     title: "Beekeeper Studio",
     description: `is a cross-platform SQL editor and database manager available for Linux, Mac, and Windows.`,
-    tags: ["tooltipr", "onboarding", "tech"]
+    tags: ["tooltipr", "onboarding", "tech"],
   },
   "476f12af-e9e5-48f7-af3d-e693e81db74f": {
     replacer: "VS Code",
     title: "Visual Studio Code",
-    description: "is a source-code editor made by Microsoft for Windows, Linux and macOS. Features include support for debugging, syntax highlighting, intelligent code completion, snippets, code refactoring, and embedded Git.",
-    tags: ["tooltipr", "onboarding", "tech"]
-  }
+    description:
+      "is a source-code editor made by Microsoft for Windows, Linux and macOS. Features include support for debugging, syntax highlighting, intelligent code completion, snippets, code refactoring, and embedded Git.",
+    tags: ["tooltipr", "onboarding", "tech"],
+  },
 };
 
 const flatDictionary = Object.entries(dictionary);
@@ -88,21 +90,21 @@ const replaceText = (): Array<DataIdDictionaryMapping> => {
   }
 
   const allGaapNodes = allDomNodes.filter((e) => {
-    const unescapedContent = outOfCharacter.replace(unescape(e.textContent))
+    const unescapedContent = outOfCharacter.replace(unescape(e.textContent));
 
     return flatDictionary.some(([key, value]) => {
       return unescapedContent.includes(value.replacer);
-    })
+    });
   });
 
   allGaapNodes.forEach((node) => {
-    const unescapedContent = outOfCharacter.replace(unescape(node.textContent))
+    const unescapedContent = outOfCharacter.replace(unescape(node.textContent));
 
     const flatDictionaryItem = flatDictionary.find(([key, value]) => {
-      return unescapedContent.includes(value.replacer)
-    })
+      return unescapedContent.includes(value.replacer);
+    });
 
-    const [flatDictionaryItemKey, flatDictionaryItemValue] = flatDictionaryItem
+    const [flatDictionaryItemKey, flatDictionaryItemValue] = flatDictionaryItem;
 
     const parent = node.parentElement;
     if (!parent) {
@@ -110,8 +112,16 @@ const replaceText = (): Array<DataIdDictionaryMapping> => {
     }
 
     if (unescapedContent === flatDictionaryItemValue.replacer) {
-      const { newElement, uuid } = spanGenerator(flatDictionaryItemValue.replacer);
-      allIds.push({ dataId: uuid, dictionaryId: flatDictionaryItemKey })
+      // Check if parent element has attributes already
+      // Then we do not need to adjust it.
+      if (parent.parentElement?.dataset?.tooltiprId) {
+        return
+      }
+
+      const { newElement, uuid } = spanGenerator(
+        flatDictionaryItemValue.replacer
+      );
+      allIds.push({ dataId: uuid, dictionaryId: flatDictionaryItemKey });
       // @ts-ignore
       parent.replaceChildren(...[newElement]);
       return;
@@ -129,8 +139,10 @@ const replaceText = (): Array<DataIdDictionaryMapping> => {
 
       newChildren.push(match);
 
-      const { newElement, uuid } = spanGenerator(flatDictionaryItemValue.replacer);
-      allIds.push({ dataId: uuid, dictionaryId: flatDictionaryItemKey })
+      const { newElement, uuid } = spanGenerator(
+        flatDictionaryItemValue.replacer
+      );
+      allIds.push({ dataId: uuid, dictionaryId: flatDictionaryItemKey });
       newChildren.push(newElement);
     });
     const newMasterSpan = document.createElement("span");
@@ -143,33 +155,43 @@ const replaceText = (): Array<DataIdDictionaryMapping> => {
   return allIds;
 };
 
+const debouncedCallback = _.debounce(
+  (allIds) => {
+    allIds = replaceText();
+
+    console.log({ allIds });
+
+    allIds.forEach((idPair) => {
+      const selector = document.querySelector(
+        `[data-tooltipr-id="${idPair.dataId}"]`
+      );
+      if (!selector) return;
+      const dictionaryElement = dictionary[idPair.dictionaryId];
+      if (!dictionaryElement) return;
+      ReactDOM.render(
+        PopoverApp({
+          title: dictionaryElement.title,
+          description: dictionaryElement.description,
+          tags: dictionaryElement.tags,
+          replacementText: dictionaryElement.replacer,
+        }),
+        selector
+      );
+    });
+  },
+  2000,
+  {}
+);
+
 chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
   let allIds: Array<DataIdDictionaryMapping> = [];
 
-  // If the received message has the expected format...
   if (msg.text === "report_back") {
-    setTimeout(() => {
-      allIds = replaceText();
+    var observer = new MutationObserver((_changed, _observer) => {
+      debouncedCallback(allIds);
+    });
 
-      console.log({allIds})
-
-      allIds.forEach((idPair) => {
-        const selector = document.querySelector(
-          `[data-tooltipr-id="${idPair.dataId}"]`
-        );
-        if (!selector) return;
-        const dictionaryElement = dictionary[idPair.dictionaryId];
-        if (!dictionaryElement) return;
-        ReactDOM.render(
-          PopoverApp({
-            title: dictionaryElement.title,
-            description: dictionaryElement.description,
-            tags: dictionaryElement.tags,
-            replacementText: dictionaryElement.replacer,
-          }),
-          selector
-        );
-      });
-    }, 2000);
+    console.log("Observer started");
+    observer.observe(document, { childList: true, subtree: true });
   }
 });
