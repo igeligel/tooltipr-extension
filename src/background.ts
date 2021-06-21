@@ -1,19 +1,67 @@
+import axios from "axios";
+
 console.log("Initialized");
 
 const doStuffWithDom = (domContent: string) => {
   console.log("I received the following DOM content:\n" + domContent);
 };
 
+let dictionary = null;
+let lastUpdate: Date | null = null;
+
+const updateDictionaries = async () => {
+  const FIVE_MIN = 5 * 60 * 1000;
+  const currentDate = new Date();
+
+  if (
+    lastUpdate !== null && currentDate.getTime() - lastUpdate.getTime() <= FIVE_MIN
+  ) {
+    return;
+  }
+  chrome.cookies.getAll({ domain: "127.0.0.1" }, async (cookies) => {
+    const dictionaryResponse = await axios.get<any>(
+      "http://127.0.0.1:3000/api/extension/dictionaries",
+      {
+        headers: {
+          "anti-csrf": cookies.find(
+            (cookie) => cookie.name === "tooltipr_sAntiCsrfToken"
+          ).value,
+          Cookie: cookies
+            .map((cookie) => `${cookie.name}=${cookie.value}`)
+            .join("; "),
+        },
+        withCredentials: true,
+      }
+    );
+    const toPush = dictionaryResponse.data.results[0].terms.reduce(
+      (acc, currentTerm) => {
+        acc[currentTerm.uuid] = {
+          replacer: currentTerm.term,
+          title: currentTerm.title,
+          description: currentTerm.description,
+          tags: currentTerm.tags.map((e) => e.tag.name),
+        };
+        return acc;
+      },
+      {}
+    );
+
+    dictionary = toPush;
+    lastUpdate = new Date();
+  });
+};
+
+updateDictionaries();
+
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
-  console.log('Listening to idle callback')
+  console.log("Listening to idle callback");
   // @ts-ignore
   // window.requestIdleCallback(() => testFunction(tabId, changeInfo), { timeout: 10000 })
   if (changeInfo.status == "complete" && tab.active) {
-    console.log("Idle State!")
-
-    chrome.tabs.sendMessage(tabId, { text: "report_back" }, doStuffWithDom);
+    console.log("Idle State!");
+    if (dictionary === null) return
+    chrome.tabs.sendMessage(tabId, { text: "report_back", serverDictionary: dictionary }, doStuffWithDom);
   }
-
 
   // if (changeInfo.status == "complete" && tab.active) {
   //   console.log("Page loaded!")
@@ -47,10 +95,10 @@ function updatePopup(status) {
 
 let data = [];
 chrome.cookies.onChanged.addListener((changeInfo) => {
-  const cookie = changeInfo.cookie
-  if (cookie.domain === 'localhost') {
-    data = data.filter(oldCookie => oldCookie.name !== cookie.name)
-    data.push(cookie)
+  const cookie = changeInfo.cookie;
+  if (cookie.domain === "localhost") {
+    data = data.filter((oldCookie) => oldCookie.name !== cookie.name);
+    data.push(cookie);
   }
   //  console.log({changeInfo})
   // const cookie = changeInfo.cookie;

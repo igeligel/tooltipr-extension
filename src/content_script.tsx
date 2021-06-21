@@ -24,42 +24,42 @@ type Dictionary = Record<
   { replacer: string; title: string; description: string; tags: Array<string> }
 >;
 
-const dictionary: Dictionary = {
-  "5984e2f2-a800-4567-8cd8-a643bcf5fdef": {
-    replacer: "GAAP",
-    title: "Generally Accepted Accounting Principles",
-    description:
-      "is the accounting standard adopted by the U.S. Securities and Exchange Commission (SEC).",
-    tags: ["tooltipr", "product"],
-  },
-  "d41ae5de-3d47-4669-93b3-a10e771dde10": {
-    replacer: "FASB",
-    title: "Financial Accounting Standards Board",
-    description: `is really great because of Julius`,
-    tags: ["tooltipr", "fintech"],
-  },
-  "3884dca8-09b9-478b-a2a5-21d4ac77aa5f": {
-    replacer: "Gen Z",
-    title: "Generation Z",
-    description: `is a really nice generation`,
-    tags: ["tooltipr", "fintech"],
-  },
-  "8b7a0311-2ac7-43fd-b3fa-a6657f6f6078": {
-    replacer: "Beekeeper Studio",
-    title: "Beekeeper Studio",
-    description: `is a cross-platform SQL editor and database manager available for Linux, Mac, and Windows.`,
-    tags: ["tooltipr", "onboarding", "tech"],
-  },
-  "476f12af-e9e5-48f7-af3d-e693e81db74f": {
-    replacer: "VS Code",
-    title: "Visual Studio Code",
-    description:
-      "is a source-code editor made by Microsoft for Windows, Linux and macOS. Features include support for debugging, syntax highlighting, intelligent code completion, snippets, code refactoring, and embedded Git.",
-    tags: ["tooltipr", "onboarding", "tech"],
-  },
-};
+// const dictionary: Dictionary = {
+//   "5984e2f2-a800-4567-8cd8-a643bcf5fdef": {
+//     replacer: "GAAP",
+//     title: "Generally Accepted Accounting Principles",
+//     description:
+//       "is the accounting standard adopted by the U.S. Securities and Exchange Commission (SEC).",
+//     tags: ["tooltipr", "product"],
+//   },
+//   "d41ae5de-3d47-4669-93b3-a10e771dde10": {
+//     replacer: "FASB",
+//     title: "Financial Accounting Standards Board",
+//     description: `is really great because of Julius`,
+//     tags: ["tooltipr", "fintech"],
+//   },
+//   "3884dca8-09b9-478b-a2a5-21d4ac77aa5f": {
+//     replacer: "Gen Z",
+//     title: "Generation Z",
+//     description: `is a really nice generation`,
+//     tags: ["tooltipr", "fintech"],
+//   },
+//   "8b7a0311-2ac7-43fd-b3fa-a6657f6f6078": {
+//     replacer: "Beekeeper Studio",
+//     title: "Beekeeper Studio",
+//     description: `is a cross-platform SQL editor and database manager available for Linux, Mac, and Windows.`,
+//     tags: ["tooltipr", "onboarding", "tech"],
+//   },
+//   "476f12af-e9e5-48f7-af3d-e693e81db74f": {
+//     replacer: "VS Code",
+//     title: "Visual Studio Code",
+//     description:
+//       "is a source-code editor made by Microsoft for Windows, Linux and macOS. Features include support for debugging, syntax highlighting, intelligent code completion, snippets, code refactoring, and embedded Git.",
+//     tags: ["tooltipr", "onboarding", "tech"],
+//   },
+// };
 
-const flatDictionary = Object.entries(dictionary);
+
 
 const spanGenerator = (offsetText) => {
   const newElement = document.createElement("span");
@@ -74,7 +74,8 @@ const spanGenerator = (offsetText) => {
 
 type DataIdDictionaryMapping = { dataId: string; dictionaryId: string };
 
-const replaceText = (): Array<DataIdDictionaryMapping> => {
+const replaceText = (serverDictionary: Dictionary): Array<DataIdDictionaryMapping> => {
+  const flatDictionary = Object.entries(serverDictionary);
   const allIds: Array<DataIdDictionaryMapping> = [];
 
   const iterator = document.createNodeIterator(document, NodeFilter.SHOW_TEXT, {
@@ -156,8 +157,8 @@ const replaceText = (): Array<DataIdDictionaryMapping> => {
 };
 
 const debouncedCallback = _.debounce(
-  (allIds) => {
-    allIds = replaceText();
+  (allIds, serverDictionary) => {
+    allIds = replaceText(serverDictionary);
 
     console.log({ allIds });
 
@@ -166,7 +167,7 @@ const debouncedCallback = _.debounce(
         `[data-tooltipr-id="${idPair.dataId}"]`
       );
       if (!selector) return;
-      const dictionaryElement = dictionary[idPair.dictionaryId];
+      const dictionaryElement = serverDictionary[idPair.dictionaryId];
       if (!dictionaryElement) return;
       ReactDOM.render(
         PopoverApp({
@@ -188,7 +189,7 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
 
   if (msg.text === "report_back") {
     var observer = new MutationObserver((_changed, _observer) => {
-      debouncedCallback(allIds);
+      debouncedCallback(allIds, msg.serverDictionary);
     });
 
     console.log("Observer started");
