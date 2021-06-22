@@ -5,6 +5,7 @@ import {
   Heading,
   Icon,
   IconButton,
+  Input,
   Text,
   VStack,
 } from "@chakra-ui/react";
@@ -13,9 +14,11 @@ import { useEffect } from "react";
 import { useCookies } from "../../hooks/useCookies";
 import { getGlossaries } from "../../api/getGlossaries";
 import { useState } from "react";
+import { usePublicGlossaries } from "../../hooks/usePublicGlossaries";
 
 export const Home = () => {
   const [cookies] = useCookies();
+  const [publicGlossaries] = usePublicGlossaries()
   const [personalGlossaries, setPersonalGlossaries] = useState(null);
   const [organizationGlossaries, setOrganizationGlossaries] = useState(null);
 
@@ -54,7 +57,7 @@ export const Home = () => {
         <Box>
           <VStack alignItems={"flex-start"} spacing={"0"}>
             {organizationGlossaries?.map((e) => {
-              return <Checkbox defaultIsChecked>{e.title}</Checkbox>;
+              return <Checkbox isDisabled defaultIsChecked>{e.title}</Checkbox>;
             })}
           </VStack>
         </Box>
@@ -64,7 +67,7 @@ export const Home = () => {
         <Box>
           <VStack alignItems={"flex-start"} spacing={"0"}>
             {personalGlossaries?.map((e) => {
-              return <Checkbox defaultIsChecked>{e.title}</Checkbox>;
+              return <Checkbox isDisabled defaultIsChecked>{e.title}</Checkbox>;
             })}
           </VStack>
         </Box>
@@ -72,8 +75,12 @@ export const Home = () => {
           Public Glossaries
         </Heading>
         <Box>
+          <Input
+            placeholder="Find something you are interested in"
+            size={"sm"}
+          />
           <VStack alignItems={"flex-start"} spacing={"0"}>
-            {[{title: 'adwadwawd'}].map((e) => {
+            {publicGlossaries.map((e) => {
               return <Checkbox defaultIsChecked>{e.title}</Checkbox>;
             })}
           </VStack>
