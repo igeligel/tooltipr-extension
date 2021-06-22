@@ -15,7 +15,6 @@ const Popup = () => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    setUserLoaded(true);
     if (cookies.length === 0) {
       return;
     }

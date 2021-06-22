@@ -9,15 +9,23 @@ const doStuffWithDom = (domContent: string) => {
 let dictionary = null;
 let lastUpdate: Date | null = null;
 
-const updateDictionaries = async () => {
-  const FIVE_MIN = 5 * 60 * 1000;
-  const currentDate = new Date();
+const FIVE_MIN = 5 * 60 * 1000;
+const FIVE_SEC = 5 * 1000;
 
-  if (
-    lastUpdate !== null && currentDate.getTime() - lastUpdate.getTime() <= FIVE_MIN
-  ) {
-    return;
+chrome.runtime.onMessage.addListener(async (msg, sender, sendResponse) => {
+  if (msg.command === "SYNCHRONIZE_GLOSSARIES") {
+    const currentDate = new Date();
+    if (
+      lastUpdate !== null &&
+      currentDate.getTime() - lastUpdate.getTime() <= FIVE_SEC
+    ) {
+      return;
+    }
+    await queryAndUpdateDictionaries();
   }
+});
+
+const queryAndUpdateDictionaries = async () => {
   chrome.cookies.getAll({ domain: "127.0.0.1" }, async (cookies) => {
     const dictionaryResponse = await axios.get<any>(
       "http://127.0.0.1:3000/api/extension/dictionaries",
@@ -33,25 +41,40 @@ const updateDictionaries = async () => {
         withCredentials: true,
       }
     );
-    const toPush = dictionaryResponse.data.results.reduce((acc, currentGlossary) => {
-      const currentGlossaryTerms = currentGlossary.terms.reduce(
-        (acc, currentTerm) => {
-          acc[currentTerm.uuid] = {
-            replacer: currentTerm.term,
-            title: currentTerm.title,
-            description: currentTerm.description,
-            tags: currentTerm.tags.map((e) => e.tag.name),
-          };
-          return acc;
-        },
-        {}
-      );
-      return {...acc, ...currentGlossaryTerms}
-    }, {})
+    const toPush = dictionaryResponse.data.results.reduce(
+      (acc, currentGlossary) => {
+        const currentGlossaryTerms = currentGlossary.terms.reduce(
+          (acc, currentTerm) => {
+            acc[currentTerm.uuid] = {
+              replacer: currentTerm.term,
+              title: currentTerm.title,
+              description: currentTerm.description,
+              tags: currentTerm.tags.map((e) => e.tag.name),
+            };
+            return acc;
+          },
+          {}
+        );
+        return { ...acc, ...currentGlossaryTerms };
+      },
+      {}
+    );
 
     dictionary = toPush;
     lastUpdate = new Date();
   });
+};
+
+const updateDictionaries = async () => {
+  const currentDate = new Date();
+
+  if (
+    lastUpdate !== null &&
+    currentDate.getTime() - lastUpdate.getTime() <= FIVE_MIN
+  ) {
+    return;
+  }
+  await queryAndUpdateDictionaries();
 };
 
 updateDictionaries();
@@ -62,8 +85,12 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
   // window.requestIdleCallback(() => testFunction(tabId, changeInfo), { timeout: 10000 })
   if (changeInfo.status == "complete" && tab.active) {
     console.log("Idle State!");
-    if (dictionary === null) return
-    chrome.tabs.sendMessage(tabId, { text: "report_back", serverDictionary: dictionary }, doStuffWithDom);
+    if (dictionary === null) return;
+    chrome.tabs.sendMessage(
+      tabId,
+      { text: "report_back", serverDictionary: dictionary },
+      doStuffWithDom
+    );
   }
 
   // if (changeInfo.status == "complete" && tab.active) {

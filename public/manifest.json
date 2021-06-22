@@ -3,7 +3,7 @@
 
   "name": "tooltipr",
   "description": "Enhancing your browsing experience to learn every topic you ever wanted to learn about!",
-  "version": "1.0",
+  "version": "0.0.1",
 
   "options_ui": {
     "page": "options.html",

@@ -91,6 +91,9 @@ const replaceText = (serverDictionary: Dictionary): Array<DataIdDictionaryMappin
   }
 
   const allGaapNodes = allDomNodes.filter((e) => {
+    const ignoredTypes = ['STYLE', 'SCRIPT']
+    // @ts-ignore
+    if (ignoredTypes.includes(e.parentNode.tagName)) return false
     const unescapedContent = outOfCharacter.replace(unescape(e.textContent));
 
     return flatDictionary.some(([key, value]) => {
