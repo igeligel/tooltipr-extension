@@ -3,6 +3,7 @@ import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import ReactDOM from "react-dom";
 import { getCurrentUser } from "./api/getCurrentUser";
+import { useCookies } from "./hooks/useCookies";
 import { Home } from "./pages/Home";
 import { Login } from "./pages/Login/index";
 
@@ -10,7 +11,7 @@ axios.defaults.withCredentials = true;
 
 const Popup = () => {
   const didMount = useRef(null);
-  const [cookies, setCookies] = useState<chrome.cookies.Cookie[]>([]);
+  const [cookies] = useCookies();
   const [userLoaded, setUserLoaded] = useState<boolean>(false);
   const [user, setUser] = useState(null);
 
@@ -20,7 +21,7 @@ const Popup = () => {
     }
 
     const fetchUser = async () => {
-      const userResponse = await getCurrentUser({cookies})
+      const userResponse = await getCurrentUser({ cookies });
 
       setUserLoaded(true);
 
@@ -28,12 +29,6 @@ const Popup = () => {
     };
     fetchUser();
   }, [cookies]);
-
-  useEffect(() => {
-    chrome.cookies.getAll({ domain: "127.0.0.1" }, (cookies) => {
-      setCookies(cookies);
-    });
-  }, []);
 
   return (
     <ChakraProvider>

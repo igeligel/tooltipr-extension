@@ -3,6 +3,7 @@ import { escape, unescape } from "html-escaper";
 import outOfCharacter from "out-of-character";
 import PopoverApp from "./PopoverApp";
 import _ from "lodash";
+import { Dictionary } from "./types";
 // document.onreadystatechange = function () {
 //   if (document.readyState === 'interactive') {
 //     // ;
@@ -18,11 +19,6 @@ const uuidv4 = () => {
     ).toString(16)
   );
 };
-
-type Dictionary = Record<
-  string,
-  { replacer: string; title: string; description: string; tags: Array<string> }
->;
 
 // const dictionary: Dictionary = {
 //   "5984e2f2-a800-4567-8cd8-a643bcf5fdef": {

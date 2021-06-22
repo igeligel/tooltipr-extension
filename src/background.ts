@@ -1,4 +1,6 @@
 import axios from "axios";
+import { getGlossaries } from "./api/getGlossaries";
+import { AwsGlossary } from "./glossaries/aws";
 
 console.log("Initialized");
 
@@ -11,6 +13,8 @@ let lastUpdate: Date | null = null;
 
 const FIVE_MIN = 5 * 60 * 1000;
 const FIVE_SEC = 5 * 1000;
+
+let exceptionDictionaryList = [];
 
 chrome.runtime.onMessage.addListener(async (msg, sender, sendResponse) => {
   if (msg.command === "SYNCHRONIZE_GLOSSARIES") {
@@ -27,38 +31,27 @@ chrome.runtime.onMessage.addListener(async (msg, sender, sendResponse) => {
 
 const queryAndUpdateDictionaries = async () => {
   chrome.cookies.getAll({ domain: "127.0.0.1" }, async (cookies) => {
-    const dictionaryResponse = await axios.get<any>(
-      "http://127.0.0.1:3000/api/extension/dictionaries",
-      {
-        headers: {
-          "anti-csrf": cookies.find(
-            (cookie) => cookie.name === "tooltipr_sAntiCsrfToken"
-          ).value,
-          Cookie: cookies
-            .map((cookie) => `${cookie.name}=${cookie.value}`)
-            .join("; "),
+    const dictionaryResponse = await getGlossaries({ cookies });
+    const serviceGlossaries = [
+      ...dictionaryResponse.data.results.personalGlossaries,
+      ...dictionaryResponse.data.results.organizationGlossaries
+    ]
+    const allGlossaries = [...serviceGlossaries, AwsGlossary];
+    const toPush = allGlossaries.reduce((acc, currentGlossary) => {
+      const currentGlossaryTerms = currentGlossary.terms.reduce(
+        (acc, currentTerm) => {
+          acc[currentTerm.uuid] = {
+            replacer: currentTerm.term,
+            title: currentTerm.title,
+            description: currentTerm.description,
+            tags: currentTerm.tags.map((e) => e.name),
+          };
+          return acc;
         },
-        withCredentials: true,
-      }
-    );
-    const toPush = dictionaryResponse.data.results.reduce(
-      (acc, currentGlossary) => {
-        const currentGlossaryTerms = currentGlossary.terms.reduce(
-          (acc, currentTerm) => {
-            acc[currentTerm.uuid] = {
-              replacer: currentTerm.term,
-              title: currentTerm.title,
-              description: currentTerm.description,
-              tags: currentTerm.tags.map((e) => e.tag.name),
-            };
-            return acc;
-          },
-          {}
-        );
-        return { ...acc, ...currentGlossaryTerms };
-      },
-      {}
-    );
+        {}
+      );
+      return { ...acc, ...currentGlossaryTerms };
+    }, {});
 
     dictionary = toPush;
     lastUpdate = new Date();
