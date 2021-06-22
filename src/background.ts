@@ -33,18 +33,21 @@ const updateDictionaries = async () => {
         withCredentials: true,
       }
     );
-    const toPush = dictionaryResponse.data.results[0].terms.reduce(
-      (acc, currentTerm) => {
-        acc[currentTerm.uuid] = {
-          replacer: currentTerm.term,
-          title: currentTerm.title,
-          description: currentTerm.description,
-          tags: currentTerm.tags.map((e) => e.tag.name),
-        };
-        return acc;
-      },
-      {}
-    );
+    const toPush = dictionaryResponse.data.results.reduce((acc, currentGlossary) => {
+      const currentGlossaryTerms = currentGlossary.terms.reduce(
+        (acc, currentTerm) => {
+          acc[currentTerm.uuid] = {
+            replacer: currentTerm.term,
+            title: currentTerm.title,
+            description: currentTerm.description,
+            tags: currentTerm.tags.map((e) => e.tag.name),
+          };
+          return acc;
+        },
+        {}
+      );
+      return {...acc, ...currentGlossaryTerms}
+    }, {})
 
     dictionary = toPush;
     lastUpdate = new Date();
@@ -96,7 +99,7 @@ function updatePopup(status) {
 let data = [];
 chrome.cookies.onChanged.addListener((changeInfo) => {
   const cookie = changeInfo.cookie;
-  if (cookie.domain === "localhost") {
+  if (cookie.domain === "127.0.0.1") {
     data = data.filter((oldCookie) => oldCookie.name !== cookie.name);
     data.push(cookie);
   }

@@ -28,8 +28,8 @@ export const Logo = createIcon({
           y2="405"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#0BC5EA" />
-          <stop offset="1" stop-color="#56B4D3" />
+          <stop stopColor="#0BC5EA" />
+          <stop offset="1" stopColor="#56B4D3" />
         </linearGradient>
         <linearGradient
           id="paint1_linear"
@@ -39,8 +39,8 @@ export const Logo = createIcon({
           y2="351.373"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#0BC5EA" />
-          <stop offset="1" stop-color="#56B4D3" />
+          <stop stopColor="#0BC5EA" />
+          <stop offset="1" stopColor="#56B4D3" />
         </linearGradient>
         <linearGradient
           id="paint2_linear"
@@ -50,8 +50,8 @@ export const Logo = createIcon({
           y2="308.13"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#0BC5EA" />
-          <stop offset="1" stop-color="#56B4D3" />
+          <stop stopColor="#0BC5EA" />
+          <stop offset="1" stopColor="#56B4D3" />
         </linearGradient>
       </defs>
     </>
