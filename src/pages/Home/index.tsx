@@ -1,6 +1,7 @@
 import React from "react";
 import {
   Box,
+  Button,
   Checkbox,
   Heading,
   Icon,
@@ -18,7 +19,6 @@ import { usePublicGlossaries } from "../../hooks/usePublicGlossaries";
 
 export const Home = () => {
   const [cookies] = useCookies();
-  const [publicGlossaries] = usePublicGlossaries()
   const [personalGlossaries, setPersonalGlossaries] = useState(null);
   const [organizationGlossaries, setOrganizationGlossaries] = useState(null);
 
@@ -57,7 +57,11 @@ export const Home = () => {
         <Box>
           <VStack alignItems={"flex-start"} spacing={"0"}>
             {organizationGlossaries?.map((e) => {
-              return <Checkbox isDisabled defaultIsChecked>{e.title}</Checkbox>;
+              return (
+                <Checkbox isDisabled defaultIsChecked>
+                  {e.title}
+                </Checkbox>
+              );
             })}
           </VStack>
         </Box>
@@ -67,23 +71,22 @@ export const Home = () => {
         <Box>
           <VStack alignItems={"flex-start"} spacing={"0"}>
             {personalGlossaries?.map((e) => {
-              return <Checkbox isDisabled defaultIsChecked>{e.title}</Checkbox>;
+              return (
+                <Checkbox isDisabled defaultIsChecked>
+                  {e.title}
+                </Checkbox>
+              );
             })}
           </VStack>
         </Box>
         <Heading as={"h2"} fontSize={"md"}>
           Public Glossaries
         </Heading>
-        <Box>
-          <Input
-            placeholder="Find something you are interested in"
-            size={"sm"}
-          />
-          <VStack alignItems={"flex-start"} spacing={"0"}>
-            {publicGlossaries.map((e) => {
-              return <Checkbox defaultIsChecked>{e.title}</Checkbox>;
-            })}
-          </VStack>
+        <Box display={"flex"}>
+          <Box></Box>
+          <Button colorScheme="teal" size="xs">
+            Button
+          </Button>
         </Box>
       </Box>
     </Box>

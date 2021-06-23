@@ -31,11 +31,12 @@ chrome.runtime.onMessage.addListener(async (msg, sender, sendResponse) => {
 
 const queryAndUpdateDictionaries = async () => {
   chrome.cookies.getAll({ domain: "127.0.0.1" }, async (cookies) => {
-    const dictionaryResponse = await getGlossaries({ cookies });
-    const serviceGlossaries = [
-      ...dictionaryResponse.data.results.personalGlossaries,
-      ...dictionaryResponse.data.results.organizationGlossaries
-    ]
+    let serviceGlossaries = []
+    try {
+      const dictionaryResponse = await getGlossaries({ cookies });
+      serviceGlossaries = [...dictionaryResponse.data.results.personalGlossaries,
+        ...dictionaryResponse.data.results.organizationGlossaries]
+    } catch (error) {}
     const allGlossaries = [...serviceGlossaries, AwsGlossary];
     const toPush = allGlossaries.reduce((acc, currentGlossary) => {
       const currentGlossaryTerms = currentGlossary.terms.reduce(

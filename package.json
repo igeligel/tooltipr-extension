@@ -31,6 +31,7 @@
     "html-escaper": "^3.0.3",
     "lodash": "^4.17.21",
     "out-of-character": "^1.2.0",
+    "pullstate": "^1.22.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-icons": "^4.2.0",
