@@ -4,6 +4,7 @@ import outOfCharacter from "out-of-character";
 import PopoverApp from "./PopoverApp";
 import _ from "lodash";
 import { Dictionary } from "./types";
+import { getLocalConfiguration } from "./configuration/getLocalConfiguration";
 // document.onreadystatechange = function () {
 //   if (document.readyState === 'interactive') {
 //     // ;
@@ -20,43 +21,6 @@ const uuidv4 = () => {
   );
 };
 
-// const dictionary: Dictionary = {
-//   "5984e2f2-a800-4567-8cd8-a643bcf5fdef": {
-//     replacer: "GAAP",
-//     title: "Generally Accepted Accounting Principles",
-//     description:
-//       "is the accounting standard adopted by the U.S. Securities and Exchange Commission (SEC).",
-//     tags: ["tooltipr", "product"],
-//   },
-//   "d41ae5de-3d47-4669-93b3-a10e771dde10": {
-//     replacer: "FASB",
-//     title: "Financial Accounting Standards Board",
-//     description: `is really great because of Julius`,
-//     tags: ["tooltipr", "fintech"],
-//   },
-//   "3884dca8-09b9-478b-a2a5-21d4ac77aa5f": {
-//     replacer: "Gen Z",
-//     title: "Generation Z",
-//     description: `is a really nice generation`,
-//     tags: ["tooltipr", "fintech"],
-//   },
-//   "8b7a0311-2ac7-43fd-b3fa-a6657f6f6078": {
-//     replacer: "Beekeeper Studio",
-//     title: "Beekeeper Studio",
-//     description: `is a cross-platform SQL editor and database manager available for Linux, Mac, and Windows.`,
-//     tags: ["tooltipr", "onboarding", "tech"],
-//   },
-//   "476f12af-e9e5-48f7-af3d-e693e81db74f": {
-//     replacer: "VS Code",
-//     title: "Visual Studio Code",
-//     description:
-//       "is a source-code editor made by Microsoft for Windows, Linux and macOS. Features include support for debugging, syntax highlighting, intelligent code completion, snippets, code refactoring, and embedded Git.",
-//     tags: ["tooltipr", "onboarding", "tech"],
-//   },
-// };
-
-
-
 const spanGenerator = (offsetText) => {
   const newElement = document.createElement("span");
   newElement.textContent = offsetText;
@@ -70,7 +34,9 @@ const spanGenerator = (offsetText) => {
 
 type DataIdDictionaryMapping = { dataId: string; dictionaryId: string };
 
-const replaceText = (serverDictionary: Dictionary): Array<DataIdDictionaryMapping> => {
+const replaceText = (
+  serverDictionary: Dictionary
+): Array<DataIdDictionaryMapping> => {
   const flatDictionary = Object.entries(serverDictionary);
   const allIds: Array<DataIdDictionaryMapping> = [];
 
@@ -87,9 +53,9 @@ const replaceText = (serverDictionary: Dictionary): Array<DataIdDictionaryMappin
   }
 
   const allGaapNodes = allDomNodes.filter((e) => {
-    const ignoredTypes = ['STYLE', 'SCRIPT']
+    const ignoredTypes = ["STYLE", "SCRIPT"];
     // @ts-ignore
-    if (ignoredTypes.includes(e.parentNode.tagName)) return false
+    if (ignoredTypes.includes(e.parentNode.tagName)) return false;
     const unescapedContent = outOfCharacter.replace(unescape(e.textContent));
 
     return flatDictionary.some(([key, value]) => {
@@ -115,7 +81,7 @@ const replaceText = (serverDictionary: Dictionary): Array<DataIdDictionaryMappin
       // Check if parent element has attributes already
       // Then we do not need to adjust it.
       if (parent.parentElement?.dataset?.tooltiprId) {
-        return
+        return;
       }
 
       const { newElement, uuid } = spanGenerator(

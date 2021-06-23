@@ -1,5 +1,6 @@
 import axios from "axios";
 import { getGlossaries } from "./api/getGlossaries";
+import { getLocalConfiguration } from "./configuration/getLocalConfiguration";
 import { AwsGlossary } from "./glossaries/aws";
 
 console.log("Initialized");
@@ -31,13 +32,27 @@ chrome.runtime.onMessage.addListener(async (msg, sender, sendResponse) => {
 
 const queryAndUpdateDictionaries = async () => {
   chrome.cookies.getAll({ domain: "127.0.0.1" }, async (cookies) => {
-    let serviceGlossaries = []
+    const publicGlossaries = [AwsGlossary];
+    // Filter Glossaries based on client configuration
+    const localConfiguration = await getLocalConfiguration();
+    // Only Public for now!
+    const filteredPublicGlossaries = publicGlossaries.filter((glossary) => {
+      return localConfiguration.publicGlossaries.some(
+        (e) => e.allowAll && e.uuid === glossary.uuid
+      );
+    });
+
+    let serviceGlossaries = [];
+
     try {
       const dictionaryResponse = await getGlossaries({ cookies });
-      serviceGlossaries = [...dictionaryResponse.data.results.personalGlossaries,
-        ...dictionaryResponse.data.results.organizationGlossaries]
+      serviceGlossaries = [
+        ...dictionaryResponse.data.results.personalGlossaries,
+        ...dictionaryResponse.data.results.organizationGlossaries,
+      ];
     } catch (error) {}
-    const allGlossaries = [...serviceGlossaries, AwsGlossary];
+    const allGlossaries = [...serviceGlossaries, ...filteredPublicGlossaries];
+
     const toPush = allGlossaries.reduce((acc, currentGlossary) => {
       const currentGlossaryTerms = currentGlossary.terms.reduce(
         (acc, currentTerm) => {

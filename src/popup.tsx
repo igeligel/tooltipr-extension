@@ -6,6 +6,7 @@ import { getCurrentUser } from "./api/getCurrentUser";
 import { useCookies } from "./hooks/useCookies";
 import { Home } from "./pages/Home";
 import { Login } from "./pages/Login/index";
+import { PublicGlossariesManager } from "./pages/PublicGlossariesManager";
 import { RouterStore } from "./router";
 
 axios.defaults.withCredentials = true;
@@ -44,6 +45,8 @@ const Popup = () => {
         return setCurrentView(<Home />);
       case "/login":
         return setCurrentView(<Login ref={didMount} />);
+      case "/home/public-glossaries-manager":
+        return setCurrentView(<PublicGlossariesManager />)
 
       default:
         return setCurrentView(<Login ref={didMount} />);
