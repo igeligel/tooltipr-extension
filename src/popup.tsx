@@ -3,6 +3,7 @@ import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import ReactDOM from "react-dom";
 import { getCurrentUser } from "./api/getCurrentUser";
+import { LoadingScreen } from "./components/LoadingScreen";
 import { useCookies } from "./hooks/useCookies";
 import { Home } from "./pages/Home";
 import { Login } from "./pages/Login/index";
@@ -24,7 +25,10 @@ const Popup = () => {
     }
 
     const fetchUser = async () => {
-      const userResponse = await getCurrentUser({ cookies });
+      let userResponse = null;
+      try {
+        userResponse = await getCurrentUser({ cookies });
+      } catch (error) {}
 
       setUserLoaded(true);
       if (userResponse.data.results) {
@@ -46,7 +50,7 @@ const Popup = () => {
       case "/login":
         return setCurrentView(<Login ref={didMount} />);
       case "/home/public-glossaries-manager":
-        return setCurrentView(<PublicGlossariesManager />)
+        return setCurrentView(<PublicGlossariesManager />);
 
       default:
         return setCurrentView(<Login ref={didMount} />);
@@ -65,11 +69,7 @@ const Popup = () => {
         flexDirection={"column"}
         padding={"4"}
       >
-        {!userLoaded && (
-          <Box display={"flex"} justifyContent={"center"} alignItems={"center"}>
-            <Spinner size="lg" />
-          </Box>
-        )}
+        {!userLoaded && <LoadingScreen />}
         {userLoaded && currentView}
       </Box>
     </ChakraProvider>
