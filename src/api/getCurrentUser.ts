@@ -1,4 +1,5 @@
 import axios from "axios";
+import { Configuration } from "../configuration";
 
 type GetCurrentUserProps = {
   cookies: chrome.cookies.Cookie[];
@@ -16,7 +17,7 @@ type GetCurrentUserResponse = {
 export const getCurrentUser = async (props: GetCurrentUserProps) => {
   const { cookies } = props;
   const userResponse = await axios.post<GetCurrentUserResponse>(
-    "http://127.0.0.1:3000/api/extension/getCurrentUser",
+    `${Configuration.DOMAIN}/api/extension/getCurrentUser`,
     {
       params: null,
       meta: {},

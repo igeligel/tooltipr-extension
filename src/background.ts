@@ -1,4 +1,5 @@
 import { getGlossaries } from "./api/getGlossaries";
+import { Configuration } from "./configuration";
 import { getLocalConfiguration } from "./configuration/getLocalConfiguration";
 import { AwsGlossary } from "./glossaries/aws";
 import { FrontendRoadmapGlossary } from "./glossaries/frontend-developer-roadmap";
@@ -29,7 +30,7 @@ chrome.runtime.onMessage.addListener(async (msg, sender, sendResponse) => {
 });
 
 const queryAndUpdateDictionaries = async () => {
-  chrome.cookies.getAll({ domain: "127.0.0.1" }, async (cookies) => {
+  chrome.cookies.getAll({ domain: Configuration.HOST }, async (cookies) => {
     const publicGlossaries = [AwsGlossary, FrontendRoadmapGlossary];
     // Filter Glossaries based on client configuration
     const localConfiguration = await getLocalConfiguration();
@@ -122,7 +123,7 @@ function updatePopup(status) {
 let data = [];
 chrome.cookies.onChanged.addListener((changeInfo) => {
   const cookie = changeInfo.cookie;
-  if (cookie.domain === "127.0.0.1") {
+  if (cookie.domain === Configuration.HOST) {
     data = data.filter((oldCookie) => oldCookie.name !== cookie.name);
     data.push(cookie);
   }

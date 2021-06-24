@@ -1,5 +1,6 @@
 import React from "react";
 import { Box, Link, Text } from "@chakra-ui/react";
+import { Configuration } from "../../configuration";
 
 export const Footer = () => {
   return (
@@ -7,7 +8,7 @@ export const Footer = () => {
       <Link
         colorScheme={"cyan"}
         display={"inline"}
-        href={"http://127.0.0.1:3000/faq/what-is-a-tooltipr-account"}
+        href={`${Configuration.DOMAIN}/faq/what-is-a-tooltipr-account`}
         target="_blank"
       >
         <Text>What is a tooltipr Account?</Text>

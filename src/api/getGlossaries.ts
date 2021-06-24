@@ -1,4 +1,5 @@
 import axios from "axios";
+import { Configuration } from "../configuration";
 
 type GetGlossariesProps = {
   cookies: chrome.cookies.Cookie[];
@@ -8,7 +9,7 @@ export const getGlossaries = async (input: GetGlossariesProps) => {
   const { cookies } = input;
 
   const dictionaryResponse = await axios.get<any>(
-    "http://127.0.0.1:3000/api/extension/dictionaries",
+    `${Configuration.DOMAIN}/api/extension/dictionaries`,
     {
       headers: {
         "anti-csrf": cookies.find(

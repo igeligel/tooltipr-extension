@@ -13,6 +13,7 @@ import { useEffect } from "react";
 import { FiSettings } from "react-icons/fi";
 import { LoadingScreen } from "../../components/LoadingScreen";
 import { Logo } from "../../components/Logo";
+import { Configuration } from "../../configuration";
 import {
   AccountMode,
   getAccountModeFromStore,
@@ -88,7 +89,7 @@ export const Main = () => {
               <Link
                 colorScheme={"cyan"}
                 display={"inline"}
-                href={"http://127.0.0.1:3000/signup"}
+                href={`${Configuration.DOMAIN}/signup`}
               >
                 Sign up
               </Link>
@@ -105,7 +106,7 @@ export const Main = () => {
               width={"100%"}
               // onClick={props.onPrimaryButtonClick}
               onClick={() => {
-                window.open("http://127.0.0.1:3000/login", "_blank");
+                window.open(`${Configuration.DOMAIN}/login`, "_blank");
               }}
             >
               Log In with tooltipr Account
