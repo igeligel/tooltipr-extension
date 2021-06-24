@@ -1,6 +1,7 @@
 import { getGlossaries } from "./api/getGlossaries";
 import { getLocalConfiguration } from "./configuration/getLocalConfiguration";
 import { AwsGlossary } from "./glossaries/aws";
+import { FrontendRoadmapGlossary } from "./glossaries/frontend-developer-roadmap";
 
 console.log("Initialized");
 
@@ -29,7 +30,7 @@ chrome.runtime.onMessage.addListener(async (msg, sender, sendResponse) => {
 
 const queryAndUpdateDictionaries = async () => {
   chrome.cookies.getAll({ domain: "127.0.0.1" }, async (cookies) => {
-    const publicGlossaries = [AwsGlossary];
+    const publicGlossaries = [AwsGlossary, FrontendRoadmapGlossary];
     // Filter Glossaries based on client configuration
     const localConfiguration = await getLocalConfiguration();
     // Only Public for now!

@@ -1,6 +1,7 @@
-import { AwsGlossary } from "../glossaries/aws"
+import { AwsGlossary } from "../glossaries/aws";
+import { FrontendRoadmapGlossary } from "../glossaries/frontend-developer-roadmap";
 
 export const usePublicGlossaries = () => {
-  const allGlossaries = [AwsGlossary]
-  return [allGlossaries]
-}
+  const allGlossaries = [AwsGlossary, FrontendRoadmapGlossary];
+  return [allGlossaries];
+};
