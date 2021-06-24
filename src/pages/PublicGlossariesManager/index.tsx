@@ -8,6 +8,7 @@ import {
   setLocalConfiguration as setLocalConfigurationGlobally,
 } from "../../configuration/getLocalConfiguration";
 import { useEffect } from "react";
+import { GlossarySelectorItem } from "../../components/GlossarySelectorItem";
 
 export const PublicGlossariesManager = () => {
   const [localConfiguration, setLocalConfiguration] =
@@ -58,47 +59,20 @@ export const PublicGlossariesManager = () => {
             />
             <VStack alignItems={"flex-start"} spacing={"0"}>
               {publicGlossaries.map((publicGlossary) => {
-                const isChecked = localConfiguration.publicGlossaries.some(
-                  (checkedGlossaries) => {
-                    return (
-                      checkedGlossaries.allowAll === true &&
-                      checkedGlossaries.uuid === publicGlossary.uuid
-                    );
-                  }
-                );
                 return (
-                  <Checkbox
-                    isChecked={isChecked}
-                    onChange={async (event: ChangeEvent<HTMLInputElement>) => {
-                      const allOtherPublicGlossaries =
-                        localConfiguration.publicGlossaries.filter((e) => {
-                          e.uuid !== publicGlossary.uuid;
-                        });
-                      const currentGlossary =
-                        localConfiguration.publicGlossaries.find((e) => {
-                          e.uuid === publicGlossary.uuid;
-                        });
-
-                      const toPush: LocalConfiguration = {
-                        ...localConfiguration,
-                        publicGlossaries: [
-                          ...allOtherPublicGlossaries,
-                          {
-                            selection: currentGlossary?.selection || [],
-                            uuid: publicGlossary.uuid,
-                            allowAll: event.target.checked,
-                          },
-                        ],
-                      };
-                      await setLocalConfigurationGlobally(toPush);
-                      setLocalConfiguration(toPush);
+                  <GlossarySelectorItem
+                    localConfiguration={localConfiguration}
+                    publicGlossary={publicGlossary}
+                    onUpdated={async (newLocalConfiguration) => {
+                      await setLocalConfigurationGlobally(
+                        newLocalConfiguration
+                      );
+                      setLocalConfiguration(newLocalConfiguration);
                       chrome.runtime.sendMessage({
                         command: "SYNCHRONIZE_GLOSSARIES",
                       });
                     }}
-                  >
-                    {publicGlossary.title}
-                  </Checkbox>
+                  />
                 );
               })}
             </VStack>

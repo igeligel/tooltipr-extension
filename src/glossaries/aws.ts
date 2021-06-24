@@ -1,18 +1,4 @@
-type Glossary = {
-  title: string;
-  uuid: string;
-  description: string;
-  terms: Array<{
-    uuid: string;
-    term: string;
-    title: string;
-    description: string;
-    tags: Array<{
-      name: string;
-      color: string;
-    }>;
-  }>;
-};
+import { Glossary } from "../types";
 
 export const AwsGlossary: Glossary = {
   uuid: "9d0ab3a6-678a-4138-b0a2-8fd1d37a242c",
