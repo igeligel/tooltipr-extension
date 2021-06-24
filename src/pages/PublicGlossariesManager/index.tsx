@@ -57,7 +57,7 @@ export const PublicGlossariesManager = () => {
               placeholder="Find something you are interested in"
               size={"sm"}
             />
-            <VStack alignItems={"flex-start"} spacing={"0"}>
+            <VStack alignItems={"flex-start"} spacing={"1"}>
               {publicGlossaries.map((publicGlossary) => {
                 return (
                   <GlossarySelectorItem
