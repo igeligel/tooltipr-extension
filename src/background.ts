@@ -37,7 +37,8 @@ const queryAndUpdateDictionaries = async () => {
     // Only Public for now!
     const filteredPublicGlossaries = publicGlossaries.filter((glossary) => {
       return localConfiguration.publicGlossaries.some(
-        (e) => e.allowAll && e.uuid === glossary.uuid
+        (publicGlossary) =>
+          publicGlossary.allowAll && publicGlossary.uuid === glossary.uuid
       );
     });
 

@@ -49,10 +49,10 @@ export const GlossarySelectorItem: React.FC<GlossarySelectorItemProps> = (
         onChange={async (event: ChangeEvent<HTMLInputElement>) => {
           const allOtherPublicGlossaries =
             localConfiguration.publicGlossaries.filter(
-              (e) => e.uuid !== publicGlossary.uuid
+              (publGlossary) => publGlossary.uuid !== publicGlossary.uuid
             );
           const currentGlossary = localConfiguration.publicGlossaries.find(
-            (e) => e.uuid === publicGlossary.uuid
+            (publGlossary) => publGlossary.uuid === publicGlossary.uuid
           );
 
           const toPush: LocalConfiguration = {

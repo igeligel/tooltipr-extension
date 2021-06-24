@@ -27,7 +27,6 @@ export const Main = () => {
 
   useEffect(() => {
     const fetchAccountMode = async () => {
-      debugger;
       const accountMode = await getAccountModeFromStore();
       setAccountMode(accountMode);
       setIsLoading(false);

@@ -29,9 +29,8 @@ const Popup = () => {
       try {
         userResponse = await getCurrentUser({ cookies });
       } catch (error) {}
-
       setUserLoaded(true);
-      if (userResponse.data.results) {
+      if (userResponse?.data?.results) {
         RouterStore.update((state) => {
           return {
             ...state,

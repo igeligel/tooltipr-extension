@@ -126,9 +126,9 @@ export const Home = () => {
               _groupHover={{ color: "gray.500" }}
             >
               {localConfiguration
-                ? localConfiguration.publicGlossaries.filter((e) => {
-                    return e.allowAll;
-                  }).length
+                ? localConfiguration.publicGlossaries.filter(
+                    (publicGlossary) => publicGlossary.allowAll
+                  ).length
                 : 0}{" "}
               of {publicGlossaries.length} Activated
             </Text>

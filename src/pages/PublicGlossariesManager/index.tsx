@@ -65,7 +65,6 @@ export const PublicGlossariesManager = () => {
                     publicGlossary={publicGlossary}
                     publicGlossaries={publicGlossaries}
                     onUpdated={async (newLocalConfiguration) => {
-                      debugger;
                       await setLocalConfigurationGlobally(
                         newLocalConfiguration
                       );

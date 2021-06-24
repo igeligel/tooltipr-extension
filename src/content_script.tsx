@@ -52,11 +52,13 @@ const replaceText = (
     allDomNodes.push(temp);
   }
 
-  const allGaapNodes = allDomNodes.filter((e) => {
+  const allGaapNodes = allDomNodes.filter((domNode) => {
     const ignoredTypes = ["STYLE", "SCRIPT"];
     // @ts-ignore
-    if (ignoredTypes.includes(e.parentNode.tagName)) return false;
-    const unescapedContent = outOfCharacter.replace(unescape(e.textContent));
+    if (ignoredTypes.includes(domNode.parentNode.tagName)) return false;
+    const unescapedContent = outOfCharacter.replace(
+      unescape(domNode.textContent)
+    );
 
     return flatDictionary.some(([key, value]) => {
       return unescapedContent.includes(value.replacer);
