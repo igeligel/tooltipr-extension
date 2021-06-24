@@ -1,4 +1,3 @@
-import axios from "axios";
 import { getGlossaries } from "./api/getGlossaries";
 import { getLocalConfiguration } from "./configuration/getLocalConfiguration";
 import { AwsGlossary } from "./glossaries/aws";
@@ -14,8 +13,6 @@ let lastUpdate: Date | null = null;
 
 const FIVE_MIN = 5 * 60 * 1000;
 const FIVE_SEC = 5 * 1000;
-
-let exceptionDictionaryList = [];
 
 chrome.runtime.onMessage.addListener(async (msg, sender, sendResponse) => {
   if (msg.command === "SYNCHRONIZE_GLOSSARIES") {
@@ -90,8 +87,6 @@ updateDictionaries();
 
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
   console.log("Listening to idle callback");
-  // @ts-ignore
-  // window.requestIdleCallback(() => testFunction(tabId, changeInfo), { timeout: 10000 })
   if (changeInfo.status == "complete" && tab.active) {
     console.log("Idle State!");
     if (dictionary === null) return;
@@ -101,13 +96,6 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
       doStuffWithDom
     );
   }
-
-  // if (changeInfo.status == "complete" && tab.active) {
-  //   console.log("Page loaded!")
-
-  //   debugger
-  //   chrome.tabs.sendMessage(tabId, { text: "report_back", requestIdleCallback }, doStuffWithDom);
-  // }
 });
 
 let userLoggedIn = false;
@@ -125,10 +113,8 @@ function updatePopup(status) {
 
   if (status) {
     userLoggedIn = true;
-    // chrome.browserAction.setPopup({ popup: "popup.html" });
   } else {
     userLoggedIn = false;
-    // chrome.browserAction.setPopup({ popup: "signin.html" });
   }
 }
 
@@ -139,22 +125,4 @@ chrome.cookies.onChanged.addListener((changeInfo) => {
     data = data.filter((oldCookie) => oldCookie.name !== cookie.name);
     data.push(cookie);
   }
-  //  console.log({changeInfo})
-  // const cookie = changeInfo.cookie;
-  // if (cookie.name === COOKIE_NAME && cookie.domain === `.${DOMAIN_NAME}`) {
-  //   updatePopup(!changeInfo.removed);
-  // }
 });
-// chrome.cookies.get(
-//   {
-//     url: `https://www.${DOMAIN_NNAME}`,
-//     name: COOKIE_NAME,
-//   },
-//   (cookie) => {
-//     if (cookie !== null) {
-//       console.log(`Found ${COOKIE_NAME} on intial run`);
-//       updatePopup(true);
-//       console.log("set popup to popup.html");
-//     }
-//   }
-// );
