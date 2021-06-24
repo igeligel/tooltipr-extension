@@ -6,13 +6,19 @@ import { Glossary } from "../types";
 type GlossarySelectorItemProps = {
   localConfiguration: LocalConfiguration;
   publicGlossary: Glossary;
+  publicGlossaries: Glossary[];
   onUpdated: (localConfiguration: LocalConfiguration) => void;
 };
 
 export const GlossarySelectorItem: React.FC<GlossarySelectorItemProps> = (
   props
 ) => {
-  const { localConfiguration, publicGlossary, onUpdated: onUpdate } = props;
+  const {
+    localConfiguration,
+    publicGlossary,
+    onUpdated: onUpdate,
+    publicGlossaries,
+  } = props;
   const isChecked = localConfiguration.publicGlossaries.some(
     (checkedGlossaries) => {
       return (
@@ -42,13 +48,11 @@ export const GlossarySelectorItem: React.FC<GlossarySelectorItemProps> = (
         isChecked={isChecked}
         onChange={async (event: ChangeEvent<HTMLInputElement>) => {
           const allOtherPublicGlossaries =
-            localConfiguration.publicGlossaries.filter((e) => {
-              e.uuid !== publicGlossary.uuid;
-            });
+            localConfiguration.publicGlossaries.filter(
+              (e) => e.uuid !== publicGlossary.uuid
+            );
           const currentGlossary = localConfiguration.publicGlossaries.find(
-            (e) => {
-              e.uuid === publicGlossary.uuid;
-            }
+            (e) => e.uuid === publicGlossary.uuid
           );
 
           const toPush: LocalConfiguration = {
