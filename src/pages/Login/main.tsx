@@ -19,32 +19,26 @@ import {
   getAccountModeFromStore,
   setAccountModeToStore,
 } from "../../configuration/accountMode";
-import { RouterStore } from "../../router";
 
 export const Main = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [accountMode, setAccountMode] = useState<AccountMode | null>(null);
 
-  useEffect(() => {
-    const fetchAccountMode = async () => {
-      const accountMode = await getAccountModeFromStore();
-      setAccountMode(accountMode);
-      setIsLoading(false);
-    };
+  // useEffect(() => {
+  //   const fetchAccountMode = async () => {
+  //     const accountMode = await getAccountModeFromStore();
+  //     setAccountMode(accountMode);
+  //     setIsLoading(false);
+  //   };
 
-    fetchAccountMode();
-  }, []);
+  //   fetchAccountMode();
+  // }, []);
 
-  useEffect(() => {
-    if (accountMode === "ANONYMOUS" || accountMode === "USER") {
-      RouterStore.update((state) => {
-        return {
-          ...state,
-          currentRoute: "/home",
-        };
-      });
-    }
-  }, [accountMode]);
+  // useEffect(() => {
+  //   if (accountMode === "ANONYMOUS" || accountMode === "USER") {
+  //     history.push("/home")
+  //   }
+  // }, [accountMode]);
 
   return (
     <>

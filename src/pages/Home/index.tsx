@@ -1,28 +1,19 @@
 import React from "react";
-import {
-  Box,
-  Button,
-  Checkbox,
-  Heading,
-  Icon,
-  IconButton,
-  Input,
-  Text,
-  VStack,
-} from "@chakra-ui/react";
+import { Box, Button, Heading, Icon, IconButton, Text } from "@chakra-ui/react";
 import { FiRefreshCcw } from "react-icons/fi";
 import { useEffect } from "react";
 import { useCookies } from "../../hooks/useCookies";
 import { getGlossaries } from "../../api/getGlossaries";
 import { useState } from "react";
 import { usePublicGlossaries } from "../../hooks/usePublicGlossaries";
-import { RouterStore } from "../../router";
 import {
   getLocalConfiguration,
   LocalConfiguration,
 } from "../../configuration/getLocalConfiguration";
+import { useHistory } from "react-router-dom";
 
 export const Home = () => {
+  const history = useHistory();
   const [publicGlossaries] = usePublicGlossaries();
   const [cookies] = useCookies();
   const [personalGlossaries, setPersonalGlossaries] = useState(null);
@@ -41,10 +32,10 @@ export const Home = () => {
 
     const getGlossariesFn = async () => {
       const glossariesResponse = await getGlossaries({ cookies });
-      setPersonalGlossaries(glossariesResponse.data.results.personalGlossaries);
-      setOrganizationGlossaries(
-        glossariesResponse.data.results.organizationGlossaries
-      );
+      // setPersonalGlossaries(glossariesResponse.data.results.personalGlossaries);
+      // setOrganizationGlossaries(
+      //   glossariesResponse.data.results.organizationGlossaries
+      // );
     };
     getGlossariesFn();
   }, [cookies]);
@@ -144,10 +135,7 @@ export const Home = () => {
             transitionDelay={"0s"}
             _groupHover={{ filter: "grayscale(0)" }}
             onClick={() => {
-              RouterStore.update((state) => ({
-                ...state,
-                currentRoute: "/home/public-glossaries-manager",
-              }));
+              history.push("/public-glossaries-manager");
             }}
           >
             Configure

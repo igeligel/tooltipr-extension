@@ -1,7 +1,6 @@
 import React, { ChangeEvent, useState } from "react";
 import { Input, VStack, Checkbox, Box, Button } from "@chakra-ui/react";
 import { usePublicGlossaries } from "../../hooks/usePublicGlossaries";
-import { RouterStore } from "../../router";
 import {
   getLocalConfiguration,
   LocalConfiguration,
@@ -9,8 +8,10 @@ import {
 } from "../../configuration/getLocalConfiguration";
 import { useEffect } from "react";
 import { GlossarySelectorItem } from "../../components/GlossarySelectorItem";
+import { useHistory } from "react-router-dom";
 
 export const PublicGlossariesManager = () => {
+  const history = useHistory();
   const [localConfiguration, setLocalConfiguration] =
     useState<null | LocalConfiguration>(null);
   const [publicGlossaries] = usePublicGlossaries();
@@ -30,10 +31,7 @@ export const PublicGlossariesManager = () => {
           <Button
             variant="link"
             onClick={() => {
-              RouterStore.update((state) => ({
-                ...state,
-                currentRoute: "/home",
-              }));
+              history.push("/home");
             }}
           >
             Back

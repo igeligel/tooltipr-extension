@@ -8,16 +8,21 @@ import { useCookies } from "./hooks/useCookies";
 import { Home } from "./pages/Home";
 import { Login } from "./pages/Login/index";
 import { PublicGlossariesManager } from "./pages/PublicGlossariesManager";
-import { RouterStore } from "./router";
+import {
+  MemoryRouter,
+  Route,
+  Switch,
+  useHistory,
+  Link,
+} from "react-router-dom";
 
 axios.defaults.withCredentials = true;
 
 const Popup = () => {
-  const currentRoute = RouterStore.useState((state) => state.currentRoute);
+  let history = useHistory();
   const didMount = useRef(null);
   const [cookies] = useCookies();
   const [userLoaded, setUserLoaded] = useState<boolean>(false);
-  const [currentView, setCurrentView] = useState(null);
 
   useEffect(() => {
     if (cookies.length === 0) {
@@ -31,30 +36,11 @@ const Popup = () => {
       } catch (error) {}
       setUserLoaded(true);
       if (userResponse?.data?.results) {
-        RouterStore.update((state) => {
-          return {
-            ...state,
-            currentRoute: "/home",
-          };
-        });
+        history.push("/home");
       }
     };
     fetchUser();
   }, [cookies]);
-
-  useEffect(() => {
-    switch (currentRoute) {
-      case "/home":
-        return setCurrentView(<Home />);
-      case "/login":
-        return setCurrentView(<Login ref={didMount} />);
-      case "/home/public-glossaries-manager":
-        return setCurrentView(<PublicGlossariesManager />);
-
-      default:
-        return setCurrentView(<Login ref={didMount} />);
-    }
-  }, [currentRoute]);
 
   return (
     <ChakraProvider>
@@ -68,8 +54,20 @@ const Popup = () => {
         flexDirection={"column"}
         padding={"4"}
       >
-        {!userLoaded && <LoadingScreen />}
-        {userLoaded && currentView}
+        <Switch>
+          <Route exact path="/home" component={Home} />
+          <Route exact path="/">
+            <Login ref={didMount} />
+          </Route>
+          <Route exact path="/login">
+            <Login ref={didMount} />
+          </Route>
+          <Route
+            exact
+            path="/public-glossaries-manager"
+            component={PublicGlossariesManager}
+          />
+        </Switch>
       </Box>
     </ChakraProvider>
   );
@@ -77,7 +75,9 @@ const Popup = () => {
 
 ReactDOM.render(
   <React.StrictMode>
-    <Popup />
+    <MemoryRouter>
+      <Popup />
+    </MemoryRouter>
   </React.StrictMode>,
   document.getElementById("root")
 );
