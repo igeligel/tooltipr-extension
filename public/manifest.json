@@ -33,5 +33,5 @@
     "persistent": false
   },
 
-  "permissions": ["storage", "activeTab", "webNavigation", "cookies", "<all_urls>"]
+  "permissions": ["storage", "activeTab", "cookies", "<all_urls>"]
 }

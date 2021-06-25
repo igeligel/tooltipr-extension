@@ -101,26 +101,6 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
   }
 });
 
-let userLoggedIn = false;
-function updatePopup(status) {
-  if (status === userLoggedIn) {
-    return;
-  }
-  chrome.runtime.sendMessage({
-    msg: "something_completed",
-    data: {
-      subject: "Loading",
-      content: "Just completed!",
-    },
-  });
-
-  if (status) {
-    userLoggedIn = true;
-  } else {
-    userLoggedIn = false;
-  }
-}
-
 let data = [];
 chrome.cookies.onChanged.addListener((changeInfo) => {
   const cookie = changeInfo.cookie;
