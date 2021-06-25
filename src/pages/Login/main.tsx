@@ -11,6 +11,7 @@ import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import { FiSettings } from "react-icons/fi";
+import { useHistory } from "react-router-dom";
 import { LoadingScreen } from "../../components/LoadingScreen";
 import { Logo } from "../../components/Logo";
 import { Configuration } from "../../configuration";
@@ -21,24 +22,25 @@ import {
 } from "../../configuration/accountMode";
 
 export const Main = () => {
+  const history = useHistory();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [accountMode, setAccountMode] = useState<AccountMode | null>(null);
 
-  // useEffect(() => {
-  //   const fetchAccountMode = async () => {
-  //     const accountMode = await getAccountModeFromStore();
-  //     setAccountMode(accountMode);
-  //     setIsLoading(false);
-  //   };
+  useEffect(() => {
+    const fetchAccountMode = async () => {
+      const accountMode = await getAccountModeFromStore();
+      setAccountMode(accountMode);
+      setIsLoading(false);
+    };
 
-  //   fetchAccountMode();
-  // }, []);
+    fetchAccountMode();
+  }, []);
 
-  // useEffect(() => {
-  //   if (accountMode === "ANONYMOUS" || accountMode === "USER") {
-  //     history.push("/home")
-  //   }
-  // }, [accountMode]);
+  useEffect(() => {
+    if (accountMode === "ANONYMOUS" || accountMode === "USER") {
+      history.push("/home");
+    }
+  }, [accountMode]);
 
   return (
     <>

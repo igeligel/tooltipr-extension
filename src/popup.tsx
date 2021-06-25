@@ -22,7 +22,6 @@ const Popup = () => {
   let history = useHistory();
   const didMount = useRef(null);
   const [cookies] = useCookies();
-  const [userLoaded, setUserLoaded] = useState<boolean>(false);
 
   useEffect(() => {
     if (cookies.length === 0) {
@@ -33,10 +32,13 @@ const Popup = () => {
       let userResponse = null;
       try {
         userResponse = await getCurrentUser({ cookies });
-      } catch (error) {}
-      setUserLoaded(true);
+      } catch (error) {
+        history.push("/login");
+      }
       if (userResponse?.data?.results) {
         history.push("/home");
+      } else {
+        history.push("/login");
       }
     };
     fetchUser();
