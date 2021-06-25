@@ -1,5 +1,5 @@
-import React, { ChangeEvent, useState } from "react";
-import { Input, VStack, Checkbox, Box, Button } from "@chakra-ui/react";
+import React, { useState } from "react";
+import { Input, VStack, Box, Button } from "@chakra-ui/react";
 import { usePublicGlossaries } from "../../hooks/usePublicGlossaries";
 import {
   getLocalConfiguration,
@@ -39,18 +39,6 @@ export const PublicGlossariesManager = () => {
         </Box>
         {localConfiguration && publicGlossaries ? (
           <Box marginTop={"2"}>
-            {/* <Button
-              onClick={async () => {
-                await setLocalConfiguration({
-                  organizationGlossariesAllowed: [],
-                  publicGlossariesAllowed: [],
-                  personalGlossariesAllowed: [],
-                });
-              }}
-            >
-              adwadwwad
-            </Button>
-            <Button>Load Config</Button> */}
             <Input
               placeholder="Find something you are interested in"
               size={"sm"}
@@ -59,6 +47,7 @@ export const PublicGlossariesManager = () => {
               {publicGlossaries.map((publicGlossary) => {
                 return (
                   <GlossarySelectorItem
+                    key={publicGlossary.uuid}
                     localConfiguration={localConfiguration}
                     publicGlossary={publicGlossary}
                     publicGlossaries={publicGlossaries}
