@@ -104,7 +104,7 @@ export const AwsGlossary: Glossary = {
     {
       uuid: "c4da4ae0-9b32-45f2-b180-eb4ee476e298",
       term: "DynamoDB",
-      title: "Amazon Elastic Beanstalk",
+      title: "Amazon Dynamo Database",
       description: `is a fully managed proprietary NoSQL database service that supports key–value and document data structures and is offered by Amazon.com as part of the Amazon Web Services portfolio. [Wikipedia]`,
       tags: [
         {
@@ -116,7 +116,7 @@ export const AwsGlossary: Glossary = {
     {
       uuid: "c102013e-923d-4841-a25b-eb8a2d22ae6f",
       term: "RDS",
-      title: "Amazon RDS",
+      title: "Amazon Relational Database Service",
       description: `is a distributed relational database service by Amazon Web Services (AWS). It is a web service running "in the cloud" designed to simplify the setup, operation, and scaling of a relational database for use in applications. [Wikipedia]`,
       tags: [
         {
