@@ -60,7 +60,9 @@ export const GlossarySelectorItem: React.FC<GlossarySelectorItemProps> = (
             publicGlossaries: [
               ...allOtherPublicGlossaries,
               {
-                selection: currentGlossary?.selection || [],
+                allowList: [],
+                denyList: [],
+                terms: currentGlossary?.terms || [],
                 uuid: publicGlossary.uuid,
                 allowAll: event.target.checked,
               },

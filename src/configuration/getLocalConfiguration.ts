@@ -1,9 +1,17 @@
 const LOCAL_CONFIGURATION_KEY = "TOOLTIPR_LOCAL_CONFIG";
 
+type GlossaryTermConfiguration = {
+  uuid: string;
+  allowList: Array<string>;
+  denyList: Array<string>;
+};
+
 type GlossarySelection = {
   uuid: string;
   allowAll: boolean;
-  selection: Array<{ uuid: string }>;
+  allowList: Array<string>;
+  denyList: Array<string>;
+  terms: Array<GlossaryTermConfiguration>;
 };
 
 export type LocalConfiguration = {
@@ -11,9 +19,13 @@ export type LocalConfiguration = {
   personalGlossaries: Array<GlossarySelection>;
   organizationGlossaries: Array<GlossarySelection>;
   publicGlossaries: Array<GlossarySelection>;
+  allowList: Array<string>;
+  denyList: Array<string>;
 };
 
-const initialConfig = {
+const initialConfig: LocalConfiguration = {
+  allowList: [],
+  denyList: [],
   organizationGlossaries: [],
   personalGlossaries: [],
   publicGlossaries: [],
@@ -26,7 +38,7 @@ export const getLocalConfiguration = (): Promise<LocalConfiguration> => {
         setLocalConfiguration(initialConfig);
         return resolve(initialConfig);
       }
-      const config = result[LOCAL_CONFIGURATION_KEY];
+      const config = result[LOCAL_CONFIGURATION_KEY] as LocalConfiguration;
       return resolve(config);
     });
   });
