@@ -7,12 +7,20 @@ export const Login = forwardRef((props, ref) => {
   const [height, setHeight] = useState("");
 
   useEffect(() => {
+    let mounted = true;
+
     // @ts-ignore
     if (ref.current) {
       setTimeout(() => {
-        setHeight("100vh");
+        if (mounted) {
+          setHeight("100vh");
+        }
       }, 100);
     }
+
+    return () => {
+      mounted = false;
+    };
   }, [ref]);
 
   return (

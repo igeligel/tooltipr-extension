@@ -87,34 +87,6 @@ export const Home = () => {
         />
       </Box>
       <VStack spacing={"3"} alignItems={"flex-start"}>
-        {/* <Heading as={"h2"} fontSize={"md"}>
-          Organization Glossaries
-        </Heading>
-        <Box>
-          <VStack alignItems={"flex-start"} spacing={"0"}>
-            {organizationGlossaries?.map((e) => {
-              return (
-                <Checkbox isDisabled defaultIsChecked>
-                  {e.title}
-                </Checkbox>
-              );
-            })}
-          </VStack>
-        </Box> */}
-        {/* <Heading as={"h2"} fontSize={"md"}>
-          Personal Glossaries
-        </Heading>
-        <Box>
-          <VStack alignItems={"flex-start"} spacing={"0"}>
-            {personalGlossaries?.map((e) => {
-              return (
-                <Checkbox isDisabled defaultIsChecked>
-                  {e.title}
-                </Checkbox>
-              );
-            })}
-          </VStack>
-        </Box>*/}
         <Box width={"100%"}>
           <Heading as={"h2"} fontSize={"md"}>
             Public Glossaries
