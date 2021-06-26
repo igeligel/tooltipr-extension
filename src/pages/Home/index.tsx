@@ -7,6 +7,7 @@ import {
   IconButton,
   Text,
   VStack,
+  Link,
 } from "@chakra-ui/react";
 import { FiAlertTriangle, FiRefreshCcw } from "react-icons/fi";
 import { useEffect } from "react";
@@ -26,6 +27,7 @@ import {
 import { AlertBox } from "../../components/AlertBox";
 import { AlertBoxTitle } from "../../components/AlertBoxTitle";
 import { AlertBoxText } from "../../components/AlertBoxText";
+import { Configuration } from "../../configuration";
 
 export const Home = () => {
   const history = useHistory();
@@ -152,7 +154,16 @@ export const Home = () => {
             <AlertBox>
               <AlertBoxTitle>User Not Authorized!</AlertBoxTitle>
               <AlertBoxText>
-                Sign up to share glossaries with your colleagues.
+                <Link
+                  isExternal
+                  color="cyan.700"
+                  onClick={() => {
+                    window.open(`${Configuration.DOMAIN}/signup`, "_blank");
+                  }}
+                >
+                  Sign up
+                </Link>{" "}
+                to share glossaries with your colleagues.
               </AlertBoxText>
             </AlertBox>
           </Box>
@@ -165,7 +176,16 @@ export const Home = () => {
             <AlertBox>
               <AlertBoxTitle>User Not Authorized!</AlertBoxTitle>
               <AlertBoxText>
-                Create your own glossaries. Just for you. Sign up now!
+                Create your own glossaries. Just for you.{" "}
+                <Link
+                  isExternal
+                  color="cyan.700"
+                  onClick={() => {
+                    window.open(`${Configuration.DOMAIN}/signup`, "_blank");
+                  }}
+                >
+                  Sign up now!
+                </Link>
               </AlertBoxText>
             </AlertBox>
           </Box>
