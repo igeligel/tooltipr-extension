@@ -15,6 +15,7 @@ import {
   useHistory,
   Link,
 } from "react-router-dom";
+import { setAccountModeToStore } from "./configuration/accountMode";
 
 axios.defaults.withCredentials = true;
 
@@ -33,11 +34,14 @@ const Popup = () => {
       try {
         userResponse = await getCurrentUser({ cookies });
       } catch (error) {
+        await setAccountModeToStore("ANONYMOUS");
         history.push("/login");
       }
       if (userResponse?.data?.results) {
+        await setAccountModeToStore("USER");
         history.push("/home");
       } else {
+        await setAccountModeToStore("ANONYMOUS");
         history.push("/login");
       }
     };
