@@ -1,19 +1,15 @@
 import React from "react";
 import {
   Box,
-  Button,
   Heading,
   Icon,
   IconButton,
-  Text,
   VStack,
   Link,
   Skeleton,
 } from "@chakra-ui/react";
-import { FiAlertTriangle, FiRefreshCcw } from "react-icons/fi";
+import { FiRefreshCcw } from "react-icons/fi";
 import { useEffect } from "react";
-import { useCookies } from "../../hooks/useCookies";
-import { getGlossaries } from "../../api/getGlossaries";
 import { useState } from "react";
 import { usePublicGlossaries } from "../../hooks/usePublicGlossaries";
 import {
