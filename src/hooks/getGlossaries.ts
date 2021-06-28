@@ -30,7 +30,6 @@ export const useGlossaries = (
         try {
           setIsLoading(true);
           const glossariesResponse = await getGlossaries({ cookies });
-          await new Promise((resolve) => setTimeout(resolve, 2000));
           setPersonalGlossaries(
             glossariesResponse.data.results.personalGlossaries
           );
