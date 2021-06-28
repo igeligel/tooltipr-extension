@@ -6,7 +6,7 @@ type GlossaryTermConfiguration = {
   denyList: Array<string>;
 };
 
-type GlossarySelection = {
+export type GlossarySelection = {
   uuid: string;
   allowAll: boolean;
   allowList: Array<string>;
