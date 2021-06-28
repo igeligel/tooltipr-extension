@@ -104,9 +104,29 @@ export const Home = () => {
                   localConfiguration?.organizationGlossaries
                 }
                 glossaries={organizationGlossaries}
-                type={"organization"}
                 onConfigureClick={() => {
                   history.push("/organization-glossaries-manager");
+                }}
+              />
+            </Skeleton>
+          </Box>
+        )}
+        {accountMode === "USER" && (
+          <Box width={"100%"}>
+            <Heading as={"h2"} fontSize={"md"}>
+              Personal Glossaries
+            </Heading>
+            <Skeleton
+              isLoaded={!glossariesLoading}
+              width={"100%"}
+              marginTop={"2"}
+              height="40px"
+            >
+              <GlossaryManageItem
+                configuredGlossaries={localConfiguration?.personalGlossaries}
+                glossaries={personalGlossaries}
+                onConfigureClick={() => {
+                  history.push("/personal-glossaries-manager");
                 }}
               />
             </Skeleton>

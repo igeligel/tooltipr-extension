@@ -7,7 +7,6 @@ type GlossaryManageItemProps = {
   onConfigureClick: () => void;
   configuredGlossaries: Array<GlossarySelection> | null;
   glossaries: Array<Glossary>;
-  type?: any;
 };
 
 export const GlossaryManageItem: React.FC<GlossaryManageItemProps> = (
