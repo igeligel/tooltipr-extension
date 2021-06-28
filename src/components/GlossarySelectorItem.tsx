@@ -5,9 +5,9 @@ import { Glossary } from "../types";
 
 type GlossarySelectorItemProps = {
   localConfiguration: LocalConfiguration;
-  publicGlossary: Glossary;
-  publicGlossaries: Glossary[];
+  glossary: Glossary;
   onUpdated: (localConfiguration: LocalConfiguration) => void;
+  localConfigurationKey: string;
 };
 
 export const GlossarySelectorItem: React.FC<GlossarySelectorItemProps> = (
@@ -15,15 +15,15 @@ export const GlossarySelectorItem: React.FC<GlossarySelectorItemProps> = (
 ) => {
   const {
     localConfiguration,
-    publicGlossary,
+    glossary,
     onUpdated: onUpdate,
-    publicGlossaries,
+    localConfigurationKey,
   } = props;
-  const isChecked = localConfiguration.publicGlossaries.some(
+  const isChecked = localConfiguration[localConfigurationKey].some(
     (checkedGlossaries) => {
       return (
         checkedGlossaries.allowAll === true &&
-        checkedGlossaries.uuid === publicGlossary.uuid
+        checkedGlossaries.uuid === glossary.uuid
       );
     }
   );
@@ -47,23 +47,22 @@ export const GlossarySelectorItem: React.FC<GlossarySelectorItemProps> = (
       <Checkbox
         isChecked={isChecked}
         onChange={async (event: ChangeEvent<HTMLInputElement>) => {
-          const allOtherPublicGlossaries =
-            localConfiguration.publicGlossaries.filter(
-              (publGlossary) => publGlossary.uuid !== publicGlossary.uuid
-            );
-          const currentGlossary = localConfiguration.publicGlossaries.find(
-            (publGlossary) => publGlossary.uuid === publicGlossary.uuid
-          );
+          const allExcludedGlossaries = localConfiguration[
+            localConfigurationKey
+          ].filter((publGlossary) => publGlossary.uuid !== glossary.uuid);
+          const currentGlossary = localConfiguration[
+            localConfigurationKey
+          ].find((publGlossary) => publGlossary.uuid === glossary.uuid);
 
           const toPush: LocalConfiguration = {
             ...localConfiguration,
-            publicGlossaries: [
-              ...allOtherPublicGlossaries,
+            [localConfigurationKey]: [
+              ...allExcludedGlossaries,
               {
                 allowList: [],
                 denyList: [],
                 terms: currentGlossary?.terms || [],
-                uuid: publicGlossary.uuid,
+                uuid: glossary.uuid,
                 allowAll: event.target.checked,
               },
             ],
@@ -71,7 +70,7 @@ export const GlossarySelectorItem: React.FC<GlossarySelectorItemProps> = (
           onUpdate(toPush);
         }}
       >
-        {publicGlossary.title}
+        {glossary.title}
       </Checkbox>
     </Box>
   );

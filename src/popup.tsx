@@ -16,6 +16,7 @@ import {
   Link,
 } from "react-router-dom";
 import { setAccountModeToStore } from "./configuration/accountMode";
+import { OrganizationGlossariesManager } from "./pages/OrganizationGlossariesManager";
 
 axios.defaults.withCredentials = true;
 
@@ -72,6 +73,11 @@ const Popup = () => {
             exact
             path="/public-glossaries-manager"
             component={PublicGlossariesManager}
+          />
+          <Route
+            exact
+            path="/organization-glossaries-manager"
+            component={OrganizationGlossariesManager}
           />
         </Switch>
       </Box>

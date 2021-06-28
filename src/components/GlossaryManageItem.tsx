@@ -19,10 +19,6 @@ export const GlossaryManageItem: React.FC<GlossaryManageItemProps> = (
     return <Box>No glossaries</Box>;
   }
 
-  if (props.type === "organization") {
-    debugger;
-  }
-
   return (
     <Box
       display={"flex"}

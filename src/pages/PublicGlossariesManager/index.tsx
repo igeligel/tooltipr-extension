@@ -49,8 +49,8 @@ export const PublicGlossariesManager = () => {
                   <GlossarySelectorItem
                     key={publicGlossary.uuid}
                     localConfiguration={localConfiguration}
-                    publicGlossary={publicGlossary}
-                    publicGlossaries={publicGlossaries}
+                    glossary={publicGlossary}
+                    localConfigurationKey={"publicGlossaries"}
                     onUpdated={async (newLocalConfiguration) => {
                       await setLocalConfigurationGlobally(
                         newLocalConfiguration
