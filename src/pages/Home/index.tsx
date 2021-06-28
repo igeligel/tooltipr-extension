@@ -30,15 +30,12 @@ import { AlertBoxTitle } from "../../components/AlertBoxTitle";
 import { AlertBoxText } from "../../components/AlertBoxText";
 import { Configuration } from "../../configuration";
 import { GlossaryManageItem } from "../../components/GlossaryManageItem";
+import { useGlossaries } from "../../hooks/getGlossaries";
 
 export const Home = () => {
   const history = useHistory();
   const [publicGlossaries] = usePublicGlossaries();
-  const [cookies] = useCookies();
   const [accountMode, setAccountMode] = useState<null | AccountMode>(null);
-  const [personalGlossaries, setPersonalGlossaries] = useState(null);
-  const [organizationGlossaries, setOrganizationGlossaries] = useState(null);
-  const [glossariesLoading, setGlossariesLoading] = useState<boolean>(true);
   const [localConfiguration, setLocalConfiguration] =
     useState<null | LocalConfiguration>(null);
 
@@ -48,34 +45,18 @@ export const Home = () => {
     });
   };
 
-  useEffect(() => {
-    if (!cookies) return;
+  const [personalGlossaries, organizationGlossaries, contextTest] =
+    useGlossaries({ enabled: accountMode !== null });
 
-    const getGlossariesFn = async () => {
+  const glossariesLoading = contextTest.isLoading;
+
+  useEffect(() => {
+    const fetchAccountMode = async () => {
       const accountMode = await getAccountModeFromStore();
-      if (accountMode !== null) {
-        setAccountMode(accountMode);
-      }
-      try {
-        setGlossariesLoading(true);
-        const glossariesResponse = await getGlossaries({ cookies });
-        await new Promise((resolve) => setTimeout(resolve, 2000));
-        setPersonalGlossaries(
-          glossariesResponse.data.results.personalGlossaries
-        );
-        setOrganizationGlossaries(
-          glossariesResponse.data.results.organizationGlossaries
-        );
-        setGlossariesLoading(false);
-      } catch (error) {
-        if (error.response.data.error.code === "API_USER_NOT_AUTHENTICATED") {
-          // Make awdadwwadwad
-        }
-        setGlossariesLoading(false);
-      }
+      setAccountMode(accountMode);
     };
-    getGlossariesFn();
-  }, [cookies]);
+    fetchAccountMode();
+  }, []);
 
   useEffect(() => {
     const fetchLocalConfiguration = async () => {
