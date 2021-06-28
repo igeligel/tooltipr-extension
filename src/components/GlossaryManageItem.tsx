@@ -4,7 +4,7 @@ import { GlossarySelection } from "../configuration/getLocalConfiguration";
 import { Glossary } from "../types";
 
 type GlossaryManageItemProps = {
-  onConfigureClick: () => void;
+  onButtonClick: () => void;
   configuredGlossaries: Array<GlossarySelection> | null;
   glossaries: Array<Glossary>;
 };
@@ -12,10 +12,21 @@ type GlossaryManageItemProps = {
 export const GlossaryManageItem: React.FC<GlossaryManageItemProps> = (
   props
 ) => {
-  const { onConfigureClick, configuredGlossaries } = props;
+  const { onButtonClick: onConfigureClick, configuredGlossaries } = props;
 
-  if (!props.glossaries || props.glossaries.length === 0) {
-    return <Box>No glossaries</Box>;
+  const glossariesAvailable = !(
+    !props.glossaries || props.glossaries.length === 0
+  );
+
+  let mainText = "No Glossaries found";
+  let buttonText = "Set up";
+  if (glossariesAvailable) {
+    const glossariesActived = configuredGlossaries
+      ? configuredGlossaries.filter((publicGlossary) => publicGlossary.allowAll)
+          .length
+      : 0;
+    mainText = `${glossariesActived} of ${props.glossaries.length} Activated`;
+    buttonText = "Configure";
   }
 
   return (
@@ -45,12 +56,7 @@ export const GlossaryManageItem: React.FC<GlossaryManageItemProps> = (
           transitionDelay={"0s"}
           _groupHover={{ color: "gray.500" }}
         >
-          {configuredGlossaries
-            ? configuredGlossaries.filter(
-                (publicGlossary) => publicGlossary.allowAll
-              ).length
-            : 0}{" "}
-          of {props.glossaries.length} Activated
+          {mainText}
         </Text>
       </Box>
       <Button
@@ -67,7 +73,7 @@ export const GlossaryManageItem: React.FC<GlossaryManageItemProps> = (
           onConfigureClick();
         }}
       >
-        Configure
+        {buttonText}
       </Button>
     </Box>
   );

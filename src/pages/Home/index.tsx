@@ -83,7 +83,7 @@ export const Home = () => {
           <GlossaryManageItem
             configuredGlossaries={localConfiguration?.publicGlossaries}
             glossaries={publicGlossaries}
-            onConfigureClick={() => {
+            onButtonClick={() => {
               history.push("/public-glossaries-manager");
             }}
           />
@@ -104,8 +104,15 @@ export const Home = () => {
                   localConfiguration?.organizationGlossaries
                 }
                 glossaries={organizationGlossaries}
-                onConfigureClick={() => {
-                  history.push("/organization-glossaries-manager");
+                onButtonClick={() => {
+                  if (organizationGlossaries?.length === 0) {
+                    window.open(
+                      `${Configuration.DOMAIN}/app/team-glossaries/create`,
+                      "_blank"
+                    );
+                  } else {
+                    history.push("/organization-glossaries-manager");
+                  }
                 }}
               />
             </Skeleton>
@@ -125,8 +132,15 @@ export const Home = () => {
               <GlossaryManageItem
                 configuredGlossaries={localConfiguration?.personalGlossaries}
                 glossaries={personalGlossaries}
-                onConfigureClick={() => {
-                  history.push("/personal-glossaries-manager");
+                onButtonClick={() => {
+                  if (personalGlossaries?.length === 0) {
+                    window.open(
+                      `${Configuration.DOMAIN}/app/personal-glossaries/create`,
+                      "_blank"
+                    );
+                  } else {
+                    history.push("/personal-glossaries-manager");
+                  }
                 }}
               />
             </Skeleton>
