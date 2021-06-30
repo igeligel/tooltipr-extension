@@ -202,7 +202,7 @@ export const AlternativePopoverElement: React.FC<PopoverElementProps> = (
     <>
       <Popover
         containerStyle={{
-          zIndex: "2147483647"
+          zIndex: "2147483647",
         }}
         isOpen={isPopoverActive || isPopoverHovered}
         positions={["top", "bottom", "left", "right"]} // preferred positions by priority

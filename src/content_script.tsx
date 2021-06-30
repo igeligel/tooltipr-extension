@@ -1,7 +1,7 @@
 import ReactDOM from "react-dom";
 import { escape, unescape } from "html-escaper";
 import outOfCharacter from "out-of-character";
-import PopoverApp from "./PopoverApp";
+import renderTooltip from "./renderTooltip";
 import _ from "lodash";
 import { Dictionary } from "./types";
 import { getLocalConfiguration } from "./configuration/getLocalConfiguration";
@@ -137,7 +137,7 @@ const debouncedCallback = _.debounce(
       const dictionaryElement = serverDictionary[idPair.dictionaryId];
       if (!dictionaryElement) return;
       ReactDOM.render(
-        PopoverApp({
+        renderTooltip({
           title: dictionaryElement.title,
           description: dictionaryElement.description,
           tags: dictionaryElement.tags,
