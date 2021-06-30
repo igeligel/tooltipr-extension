@@ -12,11 +12,6 @@
   "description": "Enhancing your browsing experience to learn every topic you ever wanted to learn about!",
   "version": "0.0.1",
 
-  "options_ui": {
-    "page": "options.html",
-    "chrome_style": true
-  },
-
   "icons": {
     "16": "16.png",
     "48": "48.png",
