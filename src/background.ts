@@ -95,7 +95,7 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
     if (dictionary === null) return;
     chrome.tabs.sendMessage(
       tabId,
-      { text: "report_back", serverDictionary: dictionary },
+      { text: "tabIsReady", serverDictionary: dictionary },
       doStuffWithDom
     );
   }

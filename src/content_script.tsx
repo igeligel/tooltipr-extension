@@ -1,15 +1,9 @@
 import ReactDOM from "react-dom";
-import { escape, unescape } from "html-escaper";
+import { unescape } from "html-escaper";
 import outOfCharacter from "out-of-character";
 import renderTooltip from "./renderTooltip";
 import _ from "lodash";
 import { Dictionary } from "./types";
-import { getLocalConfiguration } from "./configuration/getLocalConfiguration";
-// document.onreadystatechange = function () {
-//   if (document.readyState === 'interactive') {
-//     // ;
-//   }
-// };
 
 const uuidv4 = () => {
   // @ts-ignore
@@ -154,7 +148,7 @@ const debouncedCallback = _.debounce(
 chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
   let allIds: Array<DataIdDictionaryMapping> = [];
 
-  if (msg.text === "report_back") {
+  if (msg.text === "tabIsReady") {
     var observer = new MutationObserver((_changed, _observer) => {
       debouncedCallback(allIds, msg.serverDictionary);
     });
