@@ -83,9 +83,7 @@ const updateDictionaries = async () => {
 updateDictionaries();
 
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
-  console.log("Listening to idle callback");
   if (changeInfo.status == "complete" && tab.active) {
-    console.log("Idle State!");
     if (dictionary === null) return;
     chrome.tabs.sendMessage(tabId, {
       text: "tabIsReady",
