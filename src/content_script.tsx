@@ -121,8 +121,6 @@ const debouncedCallback = _.debounce(
   (allIds, serverDictionary) => {
     allIds = replaceText(serverDictionary);
 
-    console.log({ allIds });
-
     allIds.forEach((idPair) => {
       const selector = document.querySelector(
         `[data-tooltipr-id="${idPair.dataId}"]`
@@ -152,8 +150,6 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
     var observer = new MutationObserver((_changed, _observer) => {
       debouncedCallback(allIds, msg.serverDictionary);
     });
-
-    console.log("Observer started");
     observer.observe(document, { childList: true, subtree: true });
   }
 });

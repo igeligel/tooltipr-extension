@@ -4,12 +4,6 @@ import { getLocalConfiguration } from "./configuration/getLocalConfiguration";
 import { AwsGlossary } from "./glossaries/aws";
 import { FrontendRoadmapGlossary } from "./glossaries/frontend-developer-roadmap";
 
-console.log("Initialized");
-
-const doStuffWithDom = (domContent: string) => {
-  console.log("I received the following DOM content:\n" + domContent);
-};
-
 let dictionary = null;
 let lastUpdate: Date | null = null;
 
@@ -93,11 +87,10 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
   if (changeInfo.status == "complete" && tab.active) {
     console.log("Idle State!");
     if (dictionary === null) return;
-    chrome.tabs.sendMessage(
-      tabId,
-      { text: "tabIsReady", serverDictionary: dictionary },
-      doStuffWithDom
-    );
+    chrome.tabs.sendMessage(tabId, {
+      text: "tabIsReady",
+      serverDictionary: dictionary,
+    });
   }
 });
 
