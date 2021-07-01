@@ -19,8 +19,6 @@ import { setAccountModeToStore } from "./configuration/accountMode";
 import { OrganizationGlossariesManager } from "./pages/OrganizationGlossariesManager";
 import { PersonalGlossariesManager } from "./pages/PersonalGlossariesManager";
 
-axios.defaults.withCredentials = true;
-
 const Popup = () => {
   let history = useHistory();
   const didMount = useRef(null);
