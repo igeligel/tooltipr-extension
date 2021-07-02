@@ -1,70 +1,81 @@
-# Chrome Extension TypeScript Starter
+<p align="center">
+  <img width="200px" src="./docs/logo.svg" alt="Headless Recorder" />
+  <h1 align="center">tooltipr</h1>
+  <br/>
+  <p align="center">
+    <img src="https://github.com/chibat/chrome-extension-typescript-starter/workflows/build/badge.svg" alt="Github Build"/>
+  </p>
+</p>
 
-![build](https://github.com/chibat/chrome-extension-typescript-starter/workflows/build/badge.svg)
+<!-- <img src="https://img.shields.io/chrome-web-store/users/djeegiggegleadkkbgopoonhjimgehda?label=Chrome%20Webstore%20-%20Users" alt="Chrome Webstore Users" />
+    <img src="https://img.shields.io/chrome-web-store/v/djeegiggegleadkkbgopoonhjimgehda?label=Chrome%20Webstore" alt="Chrome Webstore Version" />
+    <img src="https://img.shields.io/github/license/checkly/headless-recorder?label=License" alt="License" /> -->
 
-Chrome Extension, TypeScript and Visual Studio Code
+> 🦮 A web extension that enables you to see tooltips for common topics and integrates with tooltipr.com to show you individual tooltips, set up by you or your team. 🦮
 
-## Prerequisites
+![A banner showing the functionality of tooltipr](./docs/promo-banner.png)
 
-* [node + npm](https://nodejs.org/) (Current Version)
+## 📝 Installation instructions - For users
 
-## Option
+tooltipr is a browser extension. Unfortunately, at the point of writing this you cannot install the extension via the Chrome Extension Store or the Firefox extension store.
 
-* [Visual Studio Code](https://code.visualstudio.com/)
+For now the installation has to be done manually, you can find a guide below:
 
-## Includes the following
+<details>
+ <summary>Chrome</summary>
 
-* TypeScript
-* Webpack
-* React
-* Jest
-* Example Code
-    * Chrome Storage
-    * Options Version 2
-    * content script
-    * count up badge number
-    * background
+1. Head over to our [releases tab](https://github.com/igeligel/tooltipr-extension/releases): https://github.com/igeligel/tooltipr-extension/releases
+2. You will find a `tooltipr-release-chrome.zip` file at the bottom of the release. Download this file.
+3. In Chrome go to the extensions page ([chrome://extensions/](chrome://extensions/)).
+4. Enable Developer Mode on the top right of the screen.
+5. Drag the `tooltipr-release-chrome.zip` file anywhere on the page to import it (do not delete zip afterward).
 
-## Project Structure
+</details>
 
-* src/typescript: TypeScript source files
-* src/assets: static files
-* dist: Chrome Extension directory
-* dist/js: Generated JavaScript files
+<details>
+ <summary>Firefox</summary>
 
-## Setup
+</details>
 
-```
-npm install
-```
+## 💻 Installation instructions - Developers
 
-## Import as Visual Studio Code project
+If you want to develop and contribute to this project, or simply want to create a build of this extension you will need to have the following requirements installed on your machine:
 
-...
+- [Node.js v14](https://nodejs.org/)
+- yarn
 
-## Build
+After that you will need to install the dependencies with:
 
-```
-npm run build
-```
-
-## Build in watch mode
-
-### terminal
-
-```
-npm run watch
+```bash
+yarn
 ```
 
-### Visual Studio Code
+## 🏗️ Build
 
-Run watch mode.
+You can build this project in different ways. For a simple build that works in most browsers simply use:
 
-type `Ctrl + Shift + B`
+```bash
+yarn build
+```
 
-## Load extension to chrome
+<details>
+ <summary>For Firefox Production Build</summary>
 
-Load `dist` directory
+Go to the main directoryu and use the following command
 
-## Test
-`npx jest` or `npm run test`
+```
+yarn build:firefox
+```
+
+This will create a zip file in the root directory called similar to `tooltipr-release-firefox.zip`.
+
+</details>
+
+<details>
+ <summary>For Chrome Production Build</summary>
+
+adwwadwad
+
+</details>
+
+## Development
