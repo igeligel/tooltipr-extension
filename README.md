@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="200px" src="./docs/logo.svg" alt="Headless Recorder" />
+  <img width="100px" src="./docs/logo.svg" alt="Headless Recorder" />
   <h1 align="center">tooltipr</h1>
   <br/>
   <p align="center">
