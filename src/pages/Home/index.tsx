@@ -27,6 +27,7 @@ import { AlertBoxText } from "../../components/AlertBoxText";
 import { Configuration } from "../../configuration";
 import { GlossaryManageItem } from "../../components/GlossaryManageItem";
 import { useGlossaries } from "../../hooks/getGlossaries";
+import { useCurrentUser } from "../../hooks/useCurrentUser";
 
 export const Home = () => {
   const history = useHistory();
@@ -41,8 +42,12 @@ export const Home = () => {
     });
   };
 
+  const [user, currentUserContext] = useCurrentUser();
+
+  const currentUserLoading = currentUserContext.isLoading;
+
   const [personalGlossaries, organizationGlossaries, contextTest] =
-    useGlossaries({ enabled: accountMode !== null });
+    useGlossaries({ enabled: accountMode !== null && user });
 
   const glossariesLoading = contextTest.isLoading;
 
@@ -84,13 +89,13 @@ export const Home = () => {
             }}
           />
         </Box>
-        {accountMode === "USER" && (
+        {accountMode === "USER" && user?.organization?.maxUserCount !== 1 && (
           <Box width={"100%"}>
             <Heading as={"h2"} fontSize={"md"}>
               Organization Glossaries
             </Heading>
             <Skeleton
-              isLoaded={!glossariesLoading}
+              isLoaded={!glossariesLoading && !currentUserLoading}
               width={"100%"}
               marginTop={"2"}
               height="40px"
