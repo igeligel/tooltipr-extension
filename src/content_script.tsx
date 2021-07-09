@@ -147,6 +147,11 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
   let allIds: Array<DataIdDictionaryMapping> = [];
 
   if (msg.text === "tabIsReady") {
+    // Call at least once to care for condition that mutation observer does not
+    // track document changes.
+    debouncedCallback(allIds, msg.serverDictionary);
+
+    // Start mutation observer
     var observer = new MutationObserver((_changed, _observer) => {
       debouncedCallback(allIds, msg.serverDictionary);
     });
