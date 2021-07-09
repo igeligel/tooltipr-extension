@@ -10,7 +10,7 @@ import { LogoContainer } from "./LogoContainer";
 const Span = styled.span`
   display: inline-block;
   cursor: pointer;
-  background-color: #edfdfd;
+  background-color: hsla(180, 100%, 80%, 0.2);
 `;
 
 const Hop = keyframes`
