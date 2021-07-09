@@ -22,20 +22,29 @@ tooltipr is a browser extension. Unfortunately, at the point of writing this you
 For now the installation has to be done manually, you can find a guide below:
 
 <details>
- <summary>Chrome</summary>
+ <summary>Chrome (official)</summary>
+
+1. Head over to the [Chrome Extension Page](https://chrome.google.com/webstore/detail/tooltipr/amlhfkcdbngifgpdgnaihjamanlejngi)
+2. Click Add on Chrome
+
+</details>
+
+<details>
+ <summary>Firefox (official)</summary>
+
+1. Head over to the [Firefox Add-On Page of tooltipr](https://addons.mozilla.org/en-US/firefox/addon/tooltipr/)
+2. Add the Add-On to your Firefox
+
+</details>
+
+<details>
+ <summary>Chrome (manually - not recommended)</summary>
 
 1. Head over to our [releases tab](https://github.com/igeligel/tooltipr-extension/releases): https://github.com/igeligel/tooltipr-extension/releases
 2. You will find a `tooltipr-release-chrome.zip` file at the bottom of the release. Download this file. Put it somewhere where you do not delete it.
 3. In Chrome, go to the extensions page ([`chrome://extensions/`](about:debugging#/runtime/this-firefox)). Just paste this into the URL bar.
 4. Enable Developer Mode on the top right of the screen.
 5. Drag the `tooltipr-release-chrome.zip` file anywhere on the page to import it (do not delete zip afterward).
-
-</details>
-
-<details>
- <summary>Firefox</summary>
-
-Unfortunately, we do not support Firefox just yet.
 
 </details>
 
