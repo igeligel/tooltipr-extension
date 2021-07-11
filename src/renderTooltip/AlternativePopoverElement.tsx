@@ -189,7 +189,6 @@ export const AlternativePopoverElement: React.FC<PopoverElementProps> = (
   return (
     <>
       <Tippy
-        delay={[0, 10 * 1000]}
         appendTo={() => document.querySelector("#tooltipr-tippy-root")}
         interactive={true}
         content={
