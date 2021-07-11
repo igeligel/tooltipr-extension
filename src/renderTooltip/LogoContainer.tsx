@@ -8,7 +8,7 @@ const Container = styled.div`
 `;
 
 const LogoText = styled.span`
-  color: hsl(190deg 89% 21%);
+  color: ${(props) => props.theme.colors.FooterTextColor};
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   font-feature-setting: "kern";
   font-size: 16px;

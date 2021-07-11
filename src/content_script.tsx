@@ -44,6 +44,10 @@ const replaceText = (
   const allDomNodes: Array<Node> = [];
 
   while ((temp = iterator.nextNode())) {
+    if ("tooltiprSkip" in temp.parentElement.dataset) {
+      continue;
+    }
+
     allDomNodes.push(temp);
   }
 
@@ -51,6 +55,7 @@ const replaceText = (
     const ignoredTypes = ["STYLE", "SCRIPT"];
     // @ts-ignore
     if (ignoredTypes.includes(domNode.parentNode.tagName)) return false;
+
     const unescapedContent = outOfCharacter.replace(
       unescape(domNode.textContent)
     );
@@ -122,6 +127,15 @@ const debouncedCallback = _.debounce(
   (allIds, serverDictionary) => {
     const isDarkMode = getDocumentThemeMode(document, window) === "dark";
     allIds = replaceText(serverDictionary);
+
+    const targetElement = document.querySelector("#tooltipr-tippy-root");
+    if (!targetElement) {
+      const body = document.querySelector("body");
+      var elem = document.createElement("div");
+      elem.id = "tooltipr-tippy-root";
+
+      body.appendChild(elem);
+    }
 
     allIds.forEach((idPair) => {
       const selector = document.querySelector(

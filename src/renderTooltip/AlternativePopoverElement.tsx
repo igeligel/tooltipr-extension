@@ -1,11 +1,11 @@
-import React, { ReactNode, useState } from "react";
+import React, { ReactNode } from "react";
 import styled from "@emotion/styled";
 import Tippy from "@tippyjs/react";
-import { useDebounce } from "react-use";
 import { keyframes } from "@emotion/react";
 import { HStack } from "./HStack";
-import { FiCheck, FiSettings } from "react-icons/fi";
 import { LogoContainer } from "./LogoContainer";
+import { IconCheck } from "./IconCheck";
+import { IconSettings } from "./IconSettings";
 
 const Span = styled.span`
   display: inline-block;
@@ -30,7 +30,7 @@ const PopoverContainer = styled.div`
 `;
 
 const PopoverHeading = styled.h2`
-  color: hsl(220deg 26% 14%);
+  color: ${(props) => props.theme.colors.PopoverHeadingHeadingColor};
   margin: 0;
   padding: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
@@ -51,7 +51,7 @@ type PopoverParagraphProps = {
 const PopoverParagraph = styled.p<PopoverParagraphProps>`
   margin: 0;
   padding: 0;
-  color: hsl(216deg 15% 52%);
+  color: ${(props) => props.theme.colors.ParagraphColor};
   display: block;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   font-feature-setting: "kern";
@@ -70,7 +70,8 @@ const PopoverContent = styled.div`
   box-sizing: border-box;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   color: #1a202c;
-  background-color: white;
+  background-color: ${(props) =>
+    props.theme.colors.PopoverContentBackgroundColor};
   flex-direction: column;
   width: 320px;
 
@@ -92,12 +93,12 @@ const Tag = styled.span`
   line-height: 1.2;
   outline: transparent solid 2px;
   outline-offset: 2px;
-  min-height: 1.25rem;
-  min-width: 1.25rem;
-  font-size: 12px;
+  font-size: 12px !important;
+  min-height: 20px;
+  min-width: 20px;
   padding-inline-start: 8px;
   padding-inline-end: 8px;
-  border-radius: 0.375rem;
+  border-radius: 6px;
   background: rgba(49, 151, 149, 0.6);
   background-image: initial;
   background-position-x: initial;
@@ -118,10 +119,10 @@ const SettingsBar = styled.div`
 `;
 
 const SettingsMenuButton = styled.button`
-  margin: 0;
+  margin: 0 !important;
   padding: 0;
   box-sizing: border-box;
-  padding: 4px;
+  padding: 4px !important;
   box-shadow: none;
   font-size: 24px;
   transition-property: all;
@@ -130,11 +131,14 @@ const SettingsMenuButton = styled.button`
   transition-delay: 0s;
   border-radius: 6px;
   border: 1px solid transparent;
-  color: hsl(214deg 32% 91%);
+  color: ${(props) => props.theme.colors.SettingMenuButtonColor};
   background: transparent;
-  max-height: 32px;
-  max-width: 32px;
+  height: 32px !important;
+  width: 32px !important;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   :active {
     background: hsl(189deg 82% 87%);
@@ -162,7 +166,7 @@ const Main = styled.div`
 `;
 
 const Footer = styled.div`
-  background: hsl(180deg 80% 96%);
+  background: ${(props) => props.theme.colors.FooterBackground};
   padding-right: 16px;
   padding-left: 16px;
   padding-bottom: 8px;
@@ -182,54 +186,42 @@ type PopoverElementProps = {
 export const AlternativePopoverElement: React.FC<PopoverElementProps> = (
   props
 ) => {
-  const [isPopoverHovered, setIsPopoverHovered] = useState(false);
-  const [isPopoverActive, setIsPopoverActive] = useState(false);
-
-  const [, _cancel] = useDebounce(
-    () => {
-      if (!isPopoverHovered && isPopoverActive) {
-        setIsPopoverActive(false);
-      }
-      if (isPopoverHovered && !isPopoverActive) {
-        setIsPopoverActive(true);
-      }
-    },
-    300,
-    [isPopoverHovered]
-  );
-
   return (
     <>
       <Tippy
+        delay={[0, 10 * 1000]}
+        appendTo={() => document.querySelector("#tooltipr-tippy-root")}
+        interactive={true}
         content={
-          <PopoverContainer
-            onMouseEnter={() => {
-              setIsPopoverHovered(true);
-            }}
-            onMouseLeave={() => setIsPopoverHovered(false)}
-          >
+          <PopoverContainer>
             <PopoverContent>
               <Main>
                 <SettingsBar>
                   <div>
                     <SettingsMenuButton>
-                      <FiCheck height={"24px"} width={"24px"} />
+                      <IconCheck />
                     </SettingsMenuButton>
                   </div>
                   <div>
                     <SettingsMenuButton>
-                      <FiSettings height={"24px"} width={"24px"} />
+                      <IconSettings />
                     </SettingsMenuButton>
                   </div>
                 </SettingsBar>
                 <ExplanationContent>
-                  <PopoverHeading>{props.title}</PopoverHeading>
-                  <PopoverParagraph marginTop={"4px"}>
+                  <PopoverHeading data-tooltipr-skip>
+                    {props.title}
+                  </PopoverHeading>
+                  <PopoverParagraph marginTop={"4px"} data-tooltipr-skip>
                     {props.description}
                   </PopoverParagraph>
                   <HStack spacing={"4px"} marginTop={"6px"}>
                     {props.tags.map((tag) => {
-                      return <Tag key={tag}>{tag}</Tag>;
+                      return (
+                        <Tag key={tag} data-tooltipr-skip>
+                          {tag}
+                        </Tag>
+                      );
                     })}
                   </HStack>
                 </ExplanationContent>
@@ -241,14 +233,7 @@ export const AlternativePopoverElement: React.FC<PopoverElementProps> = (
           </PopoverContainer>
         }
       >
-        <Span
-          onMouseEnter={() => {
-            setIsPopoverHovered(true);
-          }}
-          onMouseLeave={() => setIsPopoverHovered(false)}
-        >
-          {props.children}
-        </Span>
+        <Span>{props.children}</Span>
       </Tippy>
     </>
   );
