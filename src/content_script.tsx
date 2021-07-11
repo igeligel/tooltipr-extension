@@ -1,9 +1,10 @@
 import ReactDOM from "react-dom";
 import { unescape } from "html-escaper";
 import outOfCharacter from "out-of-character";
-import renderTooltip from "./renderTooltip";
 import _ from "lodash";
+import renderTooltip from "./renderTooltip";
 import { Dictionary } from "./types";
+import { getDocumentThemeMode } from "./helper/getDocumentThemeMode";
 
 const uuidv4 = () => {
   // @ts-ignore
@@ -119,6 +120,7 @@ const replaceText = (
 
 const debouncedCallback = _.debounce(
   (allIds, serverDictionary) => {
+    const isDarkMode = getDocumentThemeMode(document, window) === "dark";
     allIds = replaceText(serverDictionary);
 
     allIds.forEach((idPair) => {
@@ -128,12 +130,14 @@ const debouncedCallback = _.debounce(
       if (!selector) return;
       const dictionaryElement = serverDictionary[idPair.dictionaryId];
       if (!dictionaryElement) return;
+
       ReactDOM.render(
         renderTooltip({
           title: dictionaryElement.title,
           description: dictionaryElement.description,
           tags: dictionaryElement.tags,
           replacementText: dictionaryElement.replacer,
+          isDarkMode,
         }),
         selector
       );

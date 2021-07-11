@@ -28,6 +28,7 @@
     "@types/react-router-dom": "^5.1.7",
     "@types/webpack": "^5.28.0",
     "axios": "^0.21.1",
+    "color-rgba": "^2.2.3",
     "debounce": "^1.2.1",
     "dom-find-and-replace": "^1.4.3",
     "findandreplacedomtext": "^0.4.6",
