@@ -1,6 +1,6 @@
 import React, { ReactNode, useState } from "react";
 import styled from "@emotion/styled";
-import { Popover } from "react-tiny-popover";
+import Tippy from "@tippyjs/react";
 import { useDebounce } from "react-use";
 import { keyframes } from "@emotion/react";
 import { HStack } from "./HStack";
@@ -200,13 +200,7 @@ export const AlternativePopoverElement: React.FC<PopoverElementProps> = (
 
   return (
     <>
-      <Popover
-        containerStyle={{
-          zIndex: "2147483647",
-        }}
-        isOpen={isPopoverActive || isPopoverHovered}
-        positions={["top", "bottom", "left", "right"]} // preferred positions by priority
-        reposition={false}
+      <Tippy
         content={
           <PopoverContainer
             onMouseEnter={() => {
@@ -255,7 +249,7 @@ export const AlternativePopoverElement: React.FC<PopoverElementProps> = (
         >
           {props.children}
         </Span>
-      </Popover>
+      </Tippy>
     </>
   );
 };

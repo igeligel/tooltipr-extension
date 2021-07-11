@@ -24,6 +24,7 @@
     "@emotion/react": "11",
     "@emotion/styled": "11",
     "@popperjs/core": "^2.9.2",
+    "@tippyjs/react": "^4.2.5",
     "@types/react-router-dom": "^5.1.7",
     "@types/webpack": "^5.28.0",
     "axios": "^0.21.1",
@@ -40,7 +41,6 @@
     "react-icons": "^4.2.0",
     "react-popper": "^2.2.5",
     "react-router-dom": "^5.2.0",
-    "react-tiny-popover": "^6.0.5",
     "react-use": "^17.2.4"
   },
   "devDependencies": {
