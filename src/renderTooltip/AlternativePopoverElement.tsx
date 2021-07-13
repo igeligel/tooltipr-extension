@@ -42,6 +42,7 @@ const PopoverHeading = styled.h2`
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   border: none;
+  text-align: left !important;
 `;
 
 type PopoverParagraphProps = {
@@ -62,6 +63,7 @@ const PopoverParagraph = styled.p<PopoverParagraphProps>`
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   margin-top: ${(props) => props.marginTop || "0"};
+  text-align: left !important;
 `;
 
 const PopoverContent = styled.div`
