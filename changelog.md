@@ -2,19 +2,19 @@
 
 A small update regarding some smaller bugs discovered while testing.
 
-💥 Breaking Changes
+### 💥 Breaking Changes
 
 -/-
 
-🚀 New Features
+### 🚀 New Features
 
 -/-
 
-🐞 Patches
+### 🐞 Patches
 
 - Make sure the configuration to hide/show organization and personal glossaries is actually filtering the right glosaries.
 
-Internal Meta Changes
+### Internal Meta Changes
 
 -/-
 
@@ -22,22 +22,22 @@ Internal Meta Changes
 
 The first update of the extension.
 
-💥 Breaking Changes
+### 💥 Breaking Changes
 
 -/-
 
-🚀 New Features
+### 🚀 New Features
 
 - Dark Mode: When the extension is enabled on a page with dark mode, the tooltip will be displayed in a dark mode too.
 
-🐞 Patches
+### 🐞 Patches
 
 - Improved user interface for users that do not have a tooltipr account.
 - Fix a bug where the extension was not called on some pages.
 - Make the highlight of the tooltip work for dark and light websites.
 - Make the positioning of the tooltip work better considering the viewport where it is displayed.
 
-Internal Meta Changes
+### Internal Meta Changes
 
 - Added a changelog file
 
@@ -45,22 +45,22 @@ Internal Meta Changes
 
 Initial Release of the Browser Extension
 
-💥 Breaking Changes
+### 💥 Breaking Changes
 
 -/-
 
-🚀 New Features
+### 🚀 New Features
 
 -/-
 
-🐞 Patches
+### 🐞 Patches
 
 -/-
 
-⚡️ Some Topic
+### ⚡️ Some Topic
 
 -/-
 
-Internal Meta Changes
+### Internal Meta Changes
 
 -/-
