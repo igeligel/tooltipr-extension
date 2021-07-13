@@ -7,8 +7,16 @@ import {
   VStack,
   Link,
   Skeleton,
+  Popover,
+  PopoverArrow,
+  PopoverBody,
+  PopoverCloseButton,
+  PopoverContent,
+  PopoverHeader,
+  PopoverTrigger,
+  HStack,
 } from "@chakra-ui/react";
-import { FiRefreshCcw } from "react-icons/fi";
+import { FiMoreHorizontal, FiRefreshCcw } from "react-icons/fi";
 import { useEffect } from "react";
 import { useState } from "react";
 import { usePublicGlossaries } from "../../hooks/usePublicGlossaries";
@@ -69,13 +77,38 @@ export const Home = () => {
 
   return (
     <Box display={"flex"} flexDirection={"column"}>
-      <Box display={"flex"} justifyContent={"flex-end"}>
+      <HStack justifyContent={"flex-end"}>
         <IconButton
           onClick={onReloadDictionariesClick}
           aria-label="Reload glossaries"
           icon={<Icon as={FiRefreshCcw} />}
         />
-      </Box>
+        <Popover>
+          <PopoverTrigger>
+            <IconButton
+              onClick={() => {}}
+              aria-label="Show Options"
+              icon={<Icon as={FiMoreHorizontal} />}
+            />
+          </PopoverTrigger>
+          <PopoverContent>
+            <PopoverArrow />
+            <PopoverCloseButton />
+            <PopoverHeader>
+              <Heading fontSize={"lg"}>More Settings</Heading>
+            </PopoverHeader>
+            <PopoverBody>
+              <Link
+                onClick={() => {
+                  history.push("/url-filtering");
+                }}
+              >
+                URL Filtering
+              </Link>
+            </PopoverBody>
+          </PopoverContent>
+        </Popover>
+      </HStack>
       <VStack spacing={"3"} alignItems={"flex-start"}>
         <Box width={"100%"}>
           <Heading as={"h2"} fontSize={"md"}>
