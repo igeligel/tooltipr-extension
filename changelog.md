@@ -1,3 +1,23 @@
+## [0.0.3](https://github.com/igeligel/tooltipr-extension/releases/tag/v0.0.3) - 2021-07-13
+
+A small update regarding some smaller bugs discovered while testing.
+
+💥 Breaking Changes
+
+-/-
+
+🚀 New Features
+
+-/-
+
+🐞 Patches
+
+- Make sure the configuration to hide/show organization and personal glossaries is actually filtering the right glosaries.
+
+Internal Meta Changes
+
+-/-
+
 ## [0.0.2](https://github.com/igeligel/tooltipr-extension/releases/tag/v0.0.2) - 2021-07-12
 
 The first update of the extension.
