@@ -23,26 +23,48 @@ chrome.runtime.onMessage.addListener(async (msg, sender, sendResponse) => {
   }
 });
 
+const filterGlossary = (glossariesToFilter, glossaryConfiguration) => {
+  const filteredPublicGlossaries = glossariesToFilter.filter((glossary) => {
+    return glossaryConfiguration.some(
+      (publicGlossary) =>
+        publicGlossary.allowAll && publicGlossary.uuid === glossary.uuid
+    );
+  });
+  return filteredPublicGlossaries;
+};
+
 const queryAndUpdateDictionaries = async () => {
   chrome.cookies.getAll({ domain: Configuration.HOST }, async (cookies) => {
     const publicGlossaries = [AwsGlossary, FrontendRoadmapGlossary];
+
     // Filter Glossaries based on client configuration
     const localConfiguration = await getLocalConfiguration();
+
     // Only Public for now!
-    const filteredPublicGlossaries = publicGlossaries.filter((glossary) => {
-      return localConfiguration.publicGlossaries.some(
-        (publicGlossary) =>
-          publicGlossary.allowAll && publicGlossary.uuid === glossary.uuid
-      );
-    });
+    const filteredPublicGlossaries = filterGlossary(
+      publicGlossaries,
+      localConfiguration.publicGlossaries
+    );
 
     let serviceGlossaries = [];
 
     try {
       const dictionaryResponse = await getGlossaries({ cookies });
+
+      // Filter dictionaries
+      const filteredPersonalGlossaries = filterGlossary(
+        dictionaryResponse.data.results.personalGlossaries,
+        localConfiguration.personalGlossaries
+      );
+
+      const filteredOrganizationGlossaries = filterGlossary(
+        dictionaryResponse.data.results.organizationGlossaries,
+        localConfiguration.organizationGlossaries
+      );
+
       serviceGlossaries = [
-        ...dictionaryResponse.data.results.personalGlossaries,
-        ...dictionaryResponse.data.results.organizationGlossaries,
+        ...filteredPersonalGlossaries,
+        ...filteredOrganizationGlossaries,
       ];
     } catch (error) {}
     const allGlossaries = [...serviceGlossaries, ...filteredPublicGlossaries];
