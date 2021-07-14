@@ -19,6 +19,7 @@ import { setAccountModeToStore } from "./configuration/accountMode";
 import { OrganizationGlossariesManager } from "./pages/OrganizationGlossariesManager";
 import { PersonalGlossariesManager } from "./pages/PersonalGlossariesManager";
 import { UrlFiltering } from "./pages/UrlFiltering";
+import { UrlFilteringCreate } from "./pages/UrlFiltering/create";
 
 const Popup = () => {
   let history = useHistory();
@@ -87,6 +88,9 @@ const Popup = () => {
           />
           <Route exact path="/url-filtering">
             <UrlFiltering ref={didMount} />
+          </Route>
+          <Route exact path="/url-filtering/create">
+            <UrlFilteringCreate />
           </Route>
         </Switch>
       </Box>
