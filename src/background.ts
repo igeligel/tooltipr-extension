@@ -22,6 +22,11 @@ chrome.runtime.onMessage.addListener(async (msg, sender, sendResponse) => {
     }
     await queryAndUpdateDictionaries();
   }
+
+  if (msg.command === "SYNCHRONIZE_DENYLIST") {
+    const localConfiguration = await getLocalConfiguration();
+    denyList = localConfiguration.denyList;
+  }
 });
 
 const filterGlossary = (glossariesToFilter, glossaryConfiguration) => {

@@ -97,6 +97,9 @@ export const UrlFiltering = forwardRef((props, ref) => {
                                 return e !== globPattern;
                               });
                             await setLocalConfiguration(localConfiguration);
+                            chrome.runtime.sendMessage({
+                              command: "SYNCHRONIZE_DENYLIST",
+                            });
                             denyListContext.refetchEntries();
                           }}
                         >

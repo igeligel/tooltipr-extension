@@ -165,10 +165,10 @@ const debouncedCallback = _.debounce(
 chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
   let allIds: Array<DataIdDictionaryMapping> = [];
 
-  // If page is on deny list, do not show tooltip.
-  if (micromatch([window.location.href], msg.denyList)) {
-    return;
-  }
+  const isOnDenyList = msg.denyList.some((pattern: string) =>
+    micromatch.isMatch(window.location.href, pattern)
+  );
+  if (isOnDenyList) return;
 
   if (msg.text === "tabIsReady") {
     // Call at least once to care for condition that mutation observer does not

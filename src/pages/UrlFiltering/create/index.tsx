@@ -54,6 +54,9 @@ export const UrlFilteringCreate: React.FC = () => {
               const localConfiguration = await getLocalConfiguration();
               localConfiguration.denyList.push(globPattern);
               await setLocalConfiguration(localConfiguration);
+              chrome.runtime.sendMessage({
+                command: "SYNCHRONIZE_DENYLIST",
+              });
               history.push(`/url-filtering`);
             }}
           >
