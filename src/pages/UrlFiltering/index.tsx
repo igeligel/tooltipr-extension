@@ -1,8 +1,24 @@
-import { Box, Button, Icon, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Icon,
+  IconButton,
+  Table,
+  Tbody,
+  Td,
+  Text,
+  Th,
+  Thead,
+  Tr,
+} from "@chakra-ui/react";
 import React, { forwardRef, useEffect, useState } from "react";
-import { FiPlus } from "react-icons/fi";
+import { FiDelete, FiEdit, FiPlus } from "react-icons/fi";
 import { useHistory } from "react-router-dom";
 import { IllustrationFilter } from "../../components/IllustrationFilter";
+import {
+  getLocalConfiguration,
+  setLocalConfiguration,
+} from "../../configuration/getLocalConfiguration";
 import { useDenyList } from "../../hooks/useDenyList";
 
 export const UrlFiltering = forwardRef((props, ref) => {
@@ -58,7 +74,43 @@ export const UrlFiltering = forwardRef((props, ref) => {
                 Add Filter Rule
               </Button>
             </Box>
-            <Box>{JSON.stringify(denyList)}</Box>
+            <Table variant="simple" size={"xs"} marginTop={4}>
+              <Thead>
+                <Tr>
+                  <Th></Th>
+                  <Th>Pattern</Th>
+                </Tr>
+              </Thead>
+              <Tbody>
+                {denyList.map((globPattern) => {
+                  return (
+                    <Tr key={globPattern}>
+                      <Td width={"40px"}>
+                        <IconButton
+                          size={"sm"}
+                          aria-label="edit"
+                          onClick={async () => {
+                            const localConfiguration =
+                              await getLocalConfiguration();
+                            localConfiguration.denyList =
+                              localConfiguration.denyList.filter((e) => {
+                                return e !== globPattern;
+                              });
+                            await setLocalConfiguration(localConfiguration);
+                            denyListContext.refetchEntries();
+                          }}
+                        >
+                          <Icon as={FiDelete} />
+                        </IconButton>
+                      </Td>
+                      <Td>
+                        <Text fontSize={"md"}>{globPattern}</Text>
+                      </Td>
+                    </Tr>
+                  );
+                })}
+              </Tbody>
+            </Table>
           </>
         )}
         {denyList?.length === 0 && (

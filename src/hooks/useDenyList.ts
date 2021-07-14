@@ -1,19 +1,25 @@
 import { useEffect, useState } from "react";
 import { getLocalConfiguration } from "../configuration/getLocalConfiguration";
 
-export const useDenyList = (): [Array<string>, { loading: boolean }] => {
+type UseDenyList = [
+  Array<string>,
+  { loading: boolean; refetchEntries: () => void }
+];
+
+export const useDenyList = (): UseDenyList => {
   const [denyList, setDenyList] = useState<Array<string> | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
-  useEffect(() => {
+  const fetchConfigurations = async () => {
     setLoading(true);
-    const fetchConfigurations = async () => {
-      const config = await getLocalConfiguration();
-      setDenyList(config.denyList);
-      setLoading(false);
-    };
+    const config = await getLocalConfiguration();
+    setDenyList(config.denyList);
+    setLoading(false);
+  };
+
+  useEffect(() => {
     fetchConfigurations();
   }, []);
 
-  return [denyList, { loading }];
+  return [denyList, { loading, refetchEntries: fetchConfigurations }];
 };
