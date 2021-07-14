@@ -5,6 +5,7 @@ import { AwsGlossary } from "./glossaries/aws";
 import { FrontendRoadmapGlossary } from "./glossaries/frontend-developer-roadmap";
 
 let dictionary = null;
+let denyList: Array<string> = null;
 let lastUpdate: Date | null = null;
 
 const FIVE_MIN = 5 * 60 * 1000;
@@ -86,6 +87,7 @@ const queryAndUpdateDictionaries = async () => {
     }, {});
 
     dictionary = toPush;
+    denyList = localConfiguration.denyList;
     lastUpdate = new Date();
   });
 };
@@ -110,6 +112,7 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
     chrome.tabs.sendMessage(tabId, {
       text: "tabIsReady",
       serverDictionary: dictionary,
+      denyList,
     });
   }
 });

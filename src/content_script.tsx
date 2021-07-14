@@ -1,6 +1,7 @@
 import ReactDOM from "react-dom";
 import { unescape } from "html-escaper";
 import outOfCharacter from "out-of-character";
+import micromatch from "micromatch";
 import _ from "lodash";
 import renderTooltip from "./renderTooltip";
 import { Dictionary } from "./types";
@@ -163,6 +164,11 @@ const debouncedCallback = _.debounce(
 
 chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
   let allIds: Array<DataIdDictionaryMapping> = [];
+
+  // If page is on deny list, do not show tooltip.
+  if (micromatch([window.location.href], msg.denyList)) {
+    return;
+  }
 
   if (msg.text === "tabIsReady") {
     // Call at least once to care for condition that mutation observer does not
