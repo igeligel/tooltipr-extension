@@ -102,6 +102,8 @@ export const Home = () => {
                 onClick={() => {
                   history.push("/url-filtering");
                 }}
+                fontSize={"md"}
+                color={"cyan.800"}
               >
                 URL Filtering
               </Link>
