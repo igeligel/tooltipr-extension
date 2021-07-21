@@ -1,3 +1,23 @@
+## [0.0.4](https://github.com/igeligel/tooltipr-extension/releases/tag/v0.0.4) - 2021-07-21
+
+A small update regarding the extension's functionality.
+
+### 💥 Breaking Changes
+
+-/-
+
+### 🚀 New Features
+
+- Add a deny list for the extension. This enables the user to tell the extension to not work on certain sites. The filtering of the sites is done with glob patterns that can be configured in the extension's settings.
+
+### 🐞 Patches
+
+-/-
+
+### Internal Meta Changes
+
+- Added some issue templates that can be used when creating a [new issue](https://github.com/igeligel/tooltipr-extension/issues/new/choose).
+
 ## [0.0.3](https://github.com/igeligel/tooltipr-extension/releases/tag/v0.0.3) - 2021-07-13
 
 A small update regarding some smaller bugs discovered while testing.

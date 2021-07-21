@@ -1,6 +1,6 @@
 {
   "name": "chrome-extension-typescript-starter",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "chrome-extension-typescript-starter",
   "main": "index.js",
   "scripts": {
