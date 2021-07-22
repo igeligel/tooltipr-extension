@@ -36,8 +36,16 @@ const replaceText = (
   const flatDictionary = Object.entries(serverDictionary);
   const allIds: Array<DataIdDictionaryMapping> = [];
 
+  const ignoredTypes = ["STYLE", "SCRIPT", "TEXTAREA", "INPUT"];
+
   const iterator = document.createNodeIterator(document, NodeFilter.SHOW_TEXT, {
-    acceptNode: () => NodeFilter.FILTER_ACCEPT,
+    acceptNode: (node) => {
+      // @ts-ignore
+      if (ignoredTypes.includes(node.parentNode.tagName)) {
+        return NodeFilter.FILTER_REJECT;
+      }
+      return NodeFilter.FILTER_ACCEPT;
+    },
   });
 
   let temp: Node = null;
@@ -53,10 +61,6 @@ const replaceText = (
   }
 
   const allGaapNodes = allDomNodes.filter((domNode) => {
-    const ignoredTypes = ["STYLE", "SCRIPT"];
-    // @ts-ignore
-    if (ignoredTypes.includes(domNode.parentNode.tagName)) return false;
-
     const unescapedContent = outOfCharacter.replace(
       unescape(domNode.textContent)
     );
