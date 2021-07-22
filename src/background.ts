@@ -3,6 +3,7 @@ import { Configuration } from "./configuration";
 import { getLocalConfiguration } from "./configuration/getLocalConfiguration";
 import { AwsGlossary } from "./glossaries/aws";
 import { FrontendRoadmapGlossary } from "./glossaries/frontend-developer-roadmap";
+import { TechRecruitmentGlossary } from "./glossaries/tech-recruitement";
 
 let dictionary = null;
 let denyList: Array<string> = null;
@@ -41,7 +42,11 @@ const filterGlossary = (glossariesToFilter, glossaryConfiguration) => {
 
 const queryAndUpdateDictionaries = async () => {
   chrome.cookies.getAll({ domain: Configuration.HOST }, async (cookies) => {
-    const publicGlossaries = [AwsGlossary, FrontendRoadmapGlossary];
+    const publicGlossaries = [
+      AwsGlossary,
+      FrontendRoadmapGlossary,
+      TechRecruitmentGlossary,
+    ];
 
     // Filter Glossaries based on client configuration
     const localConfiguration = await getLocalConfiguration();
