@@ -1,3 +1,22 @@
+## [0.0.5](https://github.com/igeligel/tooltipr-extension/releases/tag/v0.0.5) - 2021-08-10
+
+### 💥 Breaking Changes
+
+-/-
+
+### 🚀 New Features
+
+- Added Tech Recruitment Glossary that holds most of technical terms and will mainly help recruiters to understand candidates on LinkedIn.
+
+### 🐞 Patches
+
+- Moved the node filtering to the actual node iterator which will speed up showing the tooltip on sites.
+- Extended the ignore rule to not highlight tooltips in input and textarea elements.
+
+### Internal Meta Changes
+
+-/-
+
 ## [0.0.4](https://github.com/igeligel/tooltipr-extension/releases/tag/v0.0.4) - 2021-07-21
 
 A small update regarding the extension's functionality.
