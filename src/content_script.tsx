@@ -169,7 +169,8 @@ const debouncedCallback = _.debounce(
 chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
   let allIds: Array<DataIdDictionaryMapping> = [];
 
-  const isOnDenyList = msg.denyList.some((pattern: string) =>
+  const normalizedDenyList = msg.denyList || [];
+  const isOnDenyList = normalizedDenyList.some((pattern: string) =>
     micromatch.isMatch(window.location.href, pattern)
   );
   if (isOnDenyList) return;
