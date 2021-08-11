@@ -1,3 +1,21 @@
+## [0.0.6](https://github.com/igeligel/tooltipr-extension/releases/tag/v0.0.5) - 2021-08-10
+
+### 💥 Breaking Changes
+
+-/-
+
+### 🚀 New Features
+
+-/-
+
+### 🐞 Patches
+
+- Fixed a bug where without deny list the extension would not highlight any keyword.
+
+### Internal Meta Changes
+
+-/-
+
 ## [0.0.5](https://github.com/igeligel/tooltipr-extension/releases/tag/v0.0.5) - 2021-08-10
 
 ### 💥 Breaking Changes
