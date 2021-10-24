@@ -21,6 +21,8 @@ import { PersonalGlossariesManager } from "./pages/PersonalGlossariesManager";
 import { UrlFiltering } from "./pages/UrlFiltering";
 import { UrlFilteringCreate } from "./pages/UrlFiltering/create";
 
+import "./i18n";
+
 const Popup = () => {
   let history = useHistory();
   const didMount = useRef(null);
