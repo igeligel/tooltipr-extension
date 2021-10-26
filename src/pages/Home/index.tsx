@@ -5,7 +5,7 @@ import {
   Icon,
   IconButton,
   VStack,
-  Link,
+  Link as ChakraLink,
   Skeleton,
   Popover,
   PopoverArrow,
@@ -100,7 +100,7 @@ export const Home = () => {
               <Heading fontSize={"lg"}>{t("home.moreSettings")}</Heading>
             </PopoverHeader>
             <PopoverBody>
-              <Link
+              <ChakraLink
                 onClick={() => {
                   history.push("/url-filtering");
                 }}
@@ -108,7 +108,7 @@ export const Home = () => {
                 color={"cyan.800"}
               >
                 {t("home.urlFiltering")}
-              </Link>
+              </ChakraLink>
             </PopoverBody>
           </PopoverContent>
         </Popover>
@@ -199,7 +199,7 @@ export const Home = () => {
                   defaults="<link>Sign up</link> to share glossaries with your colleagues."
                   components={{
                     link: (
-                      <Link
+                      <ChakraLink
                         isExternal
                         color="cyan.700"
                         onClick={() => {
@@ -231,7 +231,7 @@ export const Home = () => {
                   defaults="Create your own glossaries. Just for you. <link>Sign up now!</link>"
                   components={{
                     link: (
-                      <Link
+                      <ChakraLink
                         isExternal
                         color="cyan.700"
                         onClick={() => {
