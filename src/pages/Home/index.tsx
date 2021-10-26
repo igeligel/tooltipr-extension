@@ -36,7 +36,7 @@ import { Configuration } from "../../configuration";
 import { GlossaryManageItem } from "../../components/GlossaryManageItem";
 import { useGlossaries } from "../../hooks/getGlossaries";
 import { useCurrentUser } from "../../hooks/useCurrentUser";
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 
 export const Home = () => {
   const { t } = useTranslation();
@@ -97,7 +97,7 @@ export const Home = () => {
             <PopoverArrow />
             <PopoverCloseButton />
             <PopoverHeader>
-              <Heading fontSize={"lg"}>More Settings</Heading>
+              <Heading fontSize={"lg"}>{t("home.moreSettings")}</Heading>
             </PopoverHeader>
             <PopoverBody>
               <Link
@@ -107,7 +107,7 @@ export const Home = () => {
                 fontSize={"md"}
                 color={"cyan.800"}
               >
-                URL Filtering
+                {t("home.urlFiltering")}
               </Link>
             </PopoverBody>
           </PopoverContent>
@@ -129,7 +129,7 @@ export const Home = () => {
         {accountMode === "USER" && user?.organization?.maxUserCount !== 1 && (
           <Box width={"100%"}>
             <Heading as={"h2"} fontSize={"md"}>
-              Organization Glossaries
+              {t("home.organizationGlossaries")}
             </Heading>
             <Skeleton
               isLoaded={!glossariesLoading && !currentUserLoading}
@@ -159,7 +159,7 @@ export const Home = () => {
         {accountMode === "USER" && (
           <Box width={"100%"}>
             <Heading as={"h2"} fontSize={"md"}>
-              Personal Glossaries
+              {t("home.personalGlossaries")}
             </Heading>
             <Skeleton
               isLoaded={!glossariesLoading}
@@ -187,21 +187,31 @@ export const Home = () => {
         {accountMode === "ANONYMOUS" && (
           <Box width={"100%"}>
             <Heading as={"h2"} fontSize={"md"}>
-              Organization Glossaries
+              {t("home.organizationGlossaries")}
             </Heading>
             <AlertBox>
-              <AlertBoxTitle>User Not Authorized!</AlertBoxTitle>
+              <AlertBoxTitle>
+                {t("home.anonymous.userNotAuthorized")}
+              </AlertBoxTitle>
               <AlertBoxText>
-                <Link
-                  isExternal
-                  color="cyan.700"
-                  onClick={() => {
-                    window.open(`${Configuration.DOMAIN}/signup`, "_blank");
+                <Trans
+                  i18nKey="home.anonymous.shareGlossariesColleagues"
+                  defaults="<link>Sign up</link> to share glossaries with your colleagues."
+                  components={{
+                    link: (
+                      <Link
+                        isExternal
+                        color="cyan.700"
+                        onClick={() => {
+                          window.open(
+                            `${Configuration.DOMAIN}/signup`,
+                            "_blank"
+                          );
+                        }}
+                      />
+                    ),
                   }}
-                >
-                  Sign up
-                </Link>{" "}
-                to share glossaries with your colleagues.
+                />
               </AlertBoxText>
             </AlertBox>
           </Box>
@@ -209,21 +219,31 @@ export const Home = () => {
         {accountMode === "ANONYMOUS" && (
           <Box width={"100%"}>
             <Heading as={"h2"} fontSize={"md"}>
-              Personal Glossaries
+              {t("home.personalGlossaries")}
             </Heading>
             <AlertBox>
-              <AlertBoxTitle>User Not Authorized!</AlertBoxTitle>
+              <AlertBoxTitle>
+                {t("home.anonymous.userNotAuthorized")}
+              </AlertBoxTitle>
               <AlertBoxText>
-                Create your own glossaries. Just for you.{" "}
-                <Link
-                  isExternal
-                  color="cyan.700"
-                  onClick={() => {
-                    window.open(`${Configuration.DOMAIN}/signup`, "_blank");
+                <Trans
+                  i18nKey="home.anonymous.createOwnGlossaries"
+                  defaults="Create your own glossaries. Just for you. <link>Sign up now!</link>"
+                  components={{
+                    link: (
+                      <Link
+                        isExternal
+                        color="cyan.700"
+                        onClick={() => {
+                          window.open(
+                            `${Configuration.DOMAIN}/signup`,
+                            "_blank"
+                          );
+                        }}
+                      />
+                    ),
                   }}
-                >
-                  Sign up now!
-                </Link>
+                />
               </AlertBoxText>
             </AlertBox>
           </Box>

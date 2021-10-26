@@ -1,6 +1,15 @@
 {
   "home": {
-    "publicGlossary": "Öffentliches Glossare"
+    "moreSettings": "Mehr Einstellungen",
+    "urlFiltering": "URL-Filterung",
+    "publicGlossary": "Öffentliche Glossare",
+    "organizationGlossaries": "Organisationsglossare",
+    "personalGlossaries": "Persönliche Glossare",
+    "anonymous": {
+      "userNotAuthorized": "Benutzer nicht autorisiert!",
+      "shareGlossariesColleagues": "<link>Melden Sie sich an</link>, um Glossare mit Ihren Kollegen zu teilen.",
+      "createOwnGlossaries": "Erstellen Sie Ihre eigenen Glossare. Nur für sich selbst. <link>Registrieren Sie sich jetzt!</link>"
+    }
   },
   "login": {
     "footer": {

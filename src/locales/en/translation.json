@@ -1,6 +1,15 @@
 {
   "home": {
-    "publicGlossary": "Public Glossaries"
+    "moreSettings": "More Settings",
+    "urlFiltering": "URL Filtering",
+    "publicGlossary": "Public Glossaries",
+    "organizationGlossaries": "Organization Glossaries",
+    "personalGlossaries": "Personal Glossaries",
+    "anonymous": {
+      "userNotAuthorized": "User Not Authorized!",
+      "shareGlossariesColleagues": "<link>Sign up</link> to share glossaries with your colleagues.",
+      "createOwnGlossaries": "Create your own glossaries. Just for you. <link>Sign up now!</link>"
+    }
   },
   "login": {
     "footer": {
