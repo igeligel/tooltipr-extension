@@ -11,7 +11,7 @@
     "test": "jest",
     "style": "prettier --write \"src/**/*.{ts,tsx}\"",
     "postinstall": "patch-package",
-    "i18n": "cross-env i18next -c ./i18next-parser.config.js"
+    "i18n": "i18next -c ./i18next-parser.config.js"
   },
   "author": "",
   "license": "MIT",
