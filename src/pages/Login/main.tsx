@@ -1,16 +1,8 @@
-import {
-  Box,
-  Icon,
-  IconButton,
-  Heading,
-  Link,
-  Button,
-  Text,
-} from "@chakra-ui/react";
+import { Box, Icon, Heading, Link, Button, Text } from "@chakra-ui/react";
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
-import { FiSettings } from "react-icons/fi";
+import { Trans } from "react-i18next";
 import { useHistory } from "react-router-dom";
 import { LoadingScreen } from "../../components/LoadingScreen";
 import { Logo } from "../../components/Logo";
@@ -76,18 +68,28 @@ export const Main = () => {
             flexDirection={"column"}
             justifyContent={"center"}
           >
-            <Heading fontSize={"lg"}>Log into your account</Heading>
+            {/* Log into your account */}
+            <Heading fontSize={"lg"}>
+              <Trans
+                i18nKey="login.loginHeading"
+                defaults="Log into your account"
+              />
+            </Heading>
             <Text fontWeight={"semibold"} marginTop={"1"}>
-              <Text color={"gray.400"} as={"span"}>
-                Do not have an account yet?
-              </Text>{" "}
-              <Link
-                colorScheme={"cyan"}
-                display={"inline"}
-                href={`${Configuration.DOMAIN}/signup`}
-              >
-                Sign up
-              </Link>
+              <Trans
+                i18nKey="login.noAccountSignup"
+                defaults="<mainText>Do not have an account yet?</mainText> <signupLink>Sign up</signupLink>"
+                components={{
+                  mainText: <Text color={"gray.400"} as={"span"} />,
+                  signupLink: (
+                    <Link
+                      colorScheme={"cyan"}
+                      display={"inline"}
+                      href={`${Configuration.DOMAIN}/signup`}
+                    />
+                  ),
+                }}
+              />
             </Text>
             <Button
               marginTop={"4"}
@@ -104,7 +106,10 @@ export const Main = () => {
                 window.open(`${Configuration.DOMAIN}/login`, "_blank");
               }}
             >
-              Log In with tooltipr Account
+              <Trans
+                i18nKey="login.loginButton"
+                defaultValue="Log In with tooltipr Account"
+              />
             </Button>
 
             <Button
@@ -118,7 +123,10 @@ export const Main = () => {
                 setAccountMode("ANONYMOUS");
               }}
             >
-              Continue without account
+              <Trans
+                i18nKey="login.continueWithoutAccount"
+                defaultValue="Continue without account"
+              />
             </Button>
           </Box>
         </>

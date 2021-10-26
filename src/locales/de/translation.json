@@ -16,6 +16,10 @@
       "faq": {
         "primary": "Was ist ein tooltipr Konto?"
       }
-    }
+    },
+    "loginHeading": "Loggen Sie sich in Ihr Konto ein",
+    "noAccountSignup": "<mainText>Sie haben noch kein Konto?</mainText> <signupLink>Anmelden</signupLink>",
+    "loginButton": "Mit tooltipr-Konto anmelden",
+    "continueWithoutAccount": "Weiter ohne Konto"
   }
 }
