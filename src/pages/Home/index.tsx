@@ -196,9 +196,9 @@ export const Home = () => {
               <AlertBoxText>
                 <Trans
                   i18nKey="home.anonymous.shareGlossariesColleagues"
-                  defaults="<link>Sign up</link> to share glossaries with your colleagues."
+                  defaults="<signupLink>Sign up</signupLink> to share glossaries with your colleagues."
                   components={{
-                    link: (
+                    signupLink: (
                       <ChakraLink
                         isExternal
                         color="cyan.700"
@@ -228,9 +228,9 @@ export const Home = () => {
               <AlertBoxText>
                 <Trans
                   i18nKey="home.anonymous.createOwnGlossaries"
-                  defaults="Create your own glossaries. Just for you. <link>Sign up now!</link>"
+                  defaults="Create your own glossaries. Just for you. <signupLink>Sign up now!</signupLink>"
                   components={{
-                    link: (
+                    signupLink: (
                       <ChakraLink
                         isExternal
                         color="cyan.700"

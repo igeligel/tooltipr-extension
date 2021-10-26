@@ -7,8 +7,8 @@
     "personalGlossaries": "Persönliche Glossare",
     "anonymous": {
       "userNotAuthorized": "Benutzer nicht autorisiert!",
-      "shareGlossariesColleagues": "<link>Melden Sie sich an</link>, um Glossare mit Ihren Kollegen zu teilen.",
-      "createOwnGlossaries": "Erstellen Sie Ihre eigenen Glossare. Nur für sich selbst. <link>Registrieren Sie sich jetzt!</link>"
+      "shareGlossariesColleagues": "<signupLink>Melden Sie sich an</signupLink>, um Glossare mit Ihren Kollegen zu teilen.",
+      "createOwnGlossaries": "Erstellen Sie Ihre eigenen Glossare. Nur für sich selbst. <signupLink>Registrieren Sie sich jetzt!</signupLink>"
     }
   },
   "login": {
