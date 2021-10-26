@@ -1,0 +1,12 @@
+{
+  "home": {
+    "publicGlossary": "Öffentliches Glossare"
+  },
+  "login": {
+    "footer": {
+      "faq": {
+        "primary": "Was ist ein tooltipr Konto?"
+      }
+    }
+  }
+}

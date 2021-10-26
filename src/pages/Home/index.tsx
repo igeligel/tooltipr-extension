@@ -36,8 +36,10 @@ import { Configuration } from "../../configuration";
 import { GlossaryManageItem } from "../../components/GlossaryManageItem";
 import { useGlossaries } from "../../hooks/getGlossaries";
 import { useCurrentUser } from "../../hooks/useCurrentUser";
+import { useTranslation } from "react-i18next";
 
 export const Home = () => {
+  const { t } = useTranslation();
   const history = useHistory();
   const [publicGlossaries] = usePublicGlossaries();
   const [accountMode, setAccountMode] = useState<null | AccountMode>(null);
@@ -114,7 +116,7 @@ export const Home = () => {
       <VStack spacing={"3"} alignItems={"flex-start"}>
         <Box width={"100%"}>
           <Heading as={"h2"} fontSize={"md"}>
-            Public Glossaries
+            {t("home.publicGlossary")}
           </Heading>
           <GlossaryManageItem
             configuredGlossaries={localConfiguration?.publicGlossaries}
