@@ -21,5 +21,11 @@
     "noAccountSignup": "<mainText>Sie haben noch kein Konto?</mainText> <signupLink>Anmelden</signupLink>",
     "loginButton": "Mit tooltipr-Konto anmelden",
     "continueWithoutAccount": "Weiter ohne Konto"
+  },
+  "urlFiltering": {
+    "backToHome": "Zurück",
+    "addFilterRule": "Filterregel hinzufügen",
+    "pattern": "Muster",
+    "addNewRuleHelperDescription": "Fügen Sie eine neue Regel und einen Filter hinzu, um Tooltips auszublenden"
   }
 }

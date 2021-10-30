@@ -21,5 +21,11 @@
     "noAccountSignup": "<mainText>Do not have an account yet?</mainText> <signupLink>Sign up</signupLink>",
     "loginButton": "Log In with tooltipr Account",
     "continueWithoutAccount": "Continue without account"
+  },
+  "urlFiltering": {
+    "backToHome": "Back",
+    "addFilterRule": "Add Filter Rule",
+    "pattern": "Pattern",
+    "addNewRuleHelperDescription": "Add a new rule and filter where to hide tooltips"
   }
 }
