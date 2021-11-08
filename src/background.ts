@@ -118,6 +118,10 @@ updateDictionaries();
 
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
   if (changeInfo.status == "complete" && tab.active) {
+    chrome.tabs.sendMessage(tabId, {
+      command: "VALIDATE_TOOLTIPR_EXTENSION",
+    });
+
     if (dictionary === null) return;
     chrome.tabs.sendMessage(tabId, {
       text: "tabIsReady",

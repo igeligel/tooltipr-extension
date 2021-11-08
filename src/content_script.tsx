@@ -128,19 +128,23 @@ const replaceText = (
   return allIds;
 };
 
+const createRootElement = () => {
+  const targetElement = document.querySelector("#tooltipr-tippy-root");
+  if (!targetElement) {
+    const body = document.querySelector("body");
+    var elem = document.createElement("div");
+    elem.id = "tooltipr-tippy-root";
+
+    body.appendChild(elem);
+  }
+};
+
 const debouncedCallback = _.debounce(
   (allIds, serverDictionary) => {
     const isDarkMode = getDocumentThemeMode(document, window) === "dark";
     allIds = replaceText(serverDictionary);
 
-    const targetElement = document.querySelector("#tooltipr-tippy-root");
-    if (!targetElement) {
-      const body = document.querySelector("body");
-      var elem = document.createElement("div");
-      elem.id = "tooltipr-tippy-root";
-
-      body.appendChild(elem);
-    }
+    createRootElement();
 
     allIds.forEach((idPair) => {
       const selector = document.querySelector(
@@ -165,6 +169,12 @@ const debouncedCallback = _.debounce(
   2000,
   {}
 );
+
+chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
+  if (msg.command !== "VALIDATE_TOOLTIPR_EXTENSION") return;
+
+  createRootElement();
+});
 
 chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
   let allIds: Array<DataIdDictionaryMapping> = [];
