@@ -1,15 +1,15 @@
 <p align="center">
-  <img width="100px" src="./docs/logo.svg" alt="Headless Recorder" />
+  <img width="100px" src="./docs/logo.svg" alt="Tooltipr Logo" />
   <h1 align="center">tooltipr</h1>
   <br/>
   <p align="center">
-    <img src="https://github.com/chibat/chrome-extension-typescript-starter/workflows/build/badge.svg" alt="Github Build"/>
+    <img src="https://github.com/igeligel/tooltipr-extension/workflows/build/badge.svg" alt="Github Build" />
+    <a href="https://chrome.google.com/webstore/detail/tooltipr/amlhfkcdbngifgpdgnaihjamanlejngi/"><img src="https://img.shields.io/chrome-web-store/stars/amlhfkcdbngifgpdgnaihjamanlejngi?label=Chrome%20Rating&style=flat&logo=google" alt="Chrome Ratings" /></a>
+    <a href="https://chrome.google.com/webstore/detail/tooltipr/amlhfkcdbngifgpdgnaihjamanlejngi/"><img src="https://img.shields.io/chrome-web-store/users/amlhfkcdbngifgpdgnaihjamanlejngi?label=Chrome%20Users&style=flat&logo=google" alt="Chrome Users" /></a>
+    <a href="https://addons.mozilla.org/en-US/firefox/addon/tooltipr/"><img src="https://img.shields.io/amo/stars/tooltipr?label=Firefox%20Rating&style=flat&logo=firefox" alt="Firefox Ratings" /></a>
+    <a href="https://addons.mozilla.org/en-US/firefox/addon/tooltipr/"><img src="https://img.shields.io/amo/users/tooltipr?label=Firefox%20Users&style=flat&logo=firefox" alt="Firefox Users" /></a>
   </p>
 </p>
-
-<!-- <img src="https://img.shields.io/chrome-web-store/users/djeegiggegleadkkbgopoonhjimgehda?label=Chrome%20Webstore%20-%20Users" alt="Chrome Webstore Users" />
-    <img src="https://img.shields.io/chrome-web-store/v/djeegiggegleadkkbgopoonhjimgehda?label=Chrome%20Webstore" alt="Chrome Webstore Version" />
-    <img src="https://img.shields.io/github/license/checkly/headless-recorder?label=License" alt="License" /> -->
 
 > 🦮 A web extension that enables you to see tooltips for common topics and integrates with tooltipr.com to show you individual tooltips, set up by you or your team. 🦮
 
